@@ -1,9 +1,29 @@
 #!/bin/bash
 
 # Define global variables
-ECRS=/home/asus/asuswrt-merlin/release/ecrs
-ROOT=/home/asus/asuswrt-merlin/release/src-rt-6.x
+RELEASE=/home/asus/asuswrt-merlin/release
+ECRS=$RELEASE/ecrs
+ROOT=$RELEASE/src-rt-6.x
 MODEL="RT-AC66U"
+
+
+
+
+# Set version
+cd $RELEASE
+/usr/bin/git checkout $RELEASE/src-rt/version.conf
+cd $ECRS
+EXTENDNO=`awk -F "=" '/EXTENDNO/ {print $2}' $RELEASE/src-rt/version.conf`
+SEP=""
+if [ ! -z "EXTENDNO" ]
+then
+    SEP="_"
+fi
+ECRSTAG=`awk -F "=" '/ECRSTAG/ {print $2}' version.conf`
+ECRSNO=`awk -F "=" '/ECRSNO/ {print $2}' version.conf`
+/bin/sed --in-place '/^EXTENDNO=/ s/$/'$SEP$ECRSTAG'.'$ECRSNO'/' $RELEASE/src-rt/version.conf
+((ECRSNO++))
+/bin/sed --in-place 's/^ECRSNO=.*$/ECRSNO='$ECRSNO'/g' version.conf
 
 
 
