@@ -27,7 +27,7 @@ fi
 
 
 # Remove SSH Daemon block from the webui
-LINENUM=`/bin/grep --line-number ">SSH daemon<" $1 | /usr/bin/cut --delimiter=: --fields=1`
+LINENUM=`/bin/grep --line-number ">SSH Daemon<" $1 | /usr/bin/cut --delimiter=: --fields=1`
 if [ $LINENUM ]
 then
     while ! `/bin/sed --quiet "${LINENUM}p" $1 | /bin/grep --quiet "<table"`

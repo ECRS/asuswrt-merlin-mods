@@ -100,8 +100,20 @@ done
 
 
 
+# Insert all custom CSS, JS, img, etc files to the www directory
+/bin/echo -e "Moving custom web files into place"
+PATH=$ROOT/router/www
+for file in $ECRS/www/*
+do
+    # Copy the file into place
+    /bin/cp --force --recursive $file $PATH
+done
+
+
+
+
 # Build the Asus RT-AC66U Firmware
 #/bin/echo -e "Building firmware"
 #cd $ROOT
-#make clean
-#make V1=RT-AC66U V2=$V2-ECRS.1 rt-ac66u
+#/usr/bin/make clean
+#/usr/bin/make rt-ac66u
