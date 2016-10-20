@@ -36,6 +36,13 @@ ECRSNO=`awk -F "=" '/ECRSNO/ {print $2}' version.conf`
 
 
 
+# Apply any changes that need to occur to stock make files
+/bin/echo -e "Applying any necessary changes to the stock make files"
+/bin/bash customize.sh
+
+
+
+
 # Apply all pagemods
 /bin/echo -e "Applying all necessary changes to the Website UI"
 PATH=$ROOT/router/www
@@ -89,13 +96,14 @@ done
 
 # Prepare all jffs scripts
 /bin/echo -e "Moving scripts into place that should load at time of boot"
-PATH=$ROOT/router/mipsel-uclibc/target/jffs
+PATH=$ROOT/router/rom/scripts
 for file in $ECRS/jffs/scripts/*
 do
     # Set the script to be executable
     /bin/chmod a+rx $file
 done
-#/bin/cp --recursive --force --preserve=mode,timestamps $ECRS/jffs/scripts $PATH
+/bin/rm --recursive --force $PATH
+/bin/cp --recursive --force --preserve=mode,timestamps $ECRS/jffs/scripts $PATH
 
 
 

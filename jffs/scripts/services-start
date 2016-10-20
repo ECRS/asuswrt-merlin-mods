@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# Ensure wireless is not set to insecure methods
+if nvram get wl0_auth_mode_x | grep -q "open\|pskpsk2\|wpawpa2"
+then
+    nvram set wl0_auth_mode_x=psk2
+fi
+if nvram get wl1_auth_mode_x | grep -q "open\|pskpsk2\|wpawpa2"
+then
+    nvram set wl1_auth_mode_x=psk2
+fi
+
+
+
+
+# Reset all ECRS defaults that have been removed from the WebUI
+# for security purposes.
+nvram set jffs2_format=0
+nvram set jffs2_scripts=1
+nvram set http_enable=1
+nvram set https_lanport=443
+nvram set misc_http_x=0
+nvram set misc_httpport_x=0
+nvram set misc_httpsport_x=0
+nvram set http_autologout=30
+nvram set nat_redirect_enable=0
+nvram set http_dut_redir=0
+nvram set http_client=0
+nvram set sshd_enable=2
+nvram set sshd_forwarding=0
+nvram set sshd_port=22
+nvram set sshd_pass=1
+nvram set sshd_bfp=1
+nvram set sshd_authkeys=""
+
+
+
+
+# Set Wi-Fi SSID's given that they still have ASUS settings
+if nvram get wl0_ssid | grep -q "=ASUS"
+then
+    nvram set wl0_ssid=ECRS
+fi
+if nvram get wl1_ssid | grep -q "=ASUS_5G"
+then
+    nvram set wl1_ssid=ECRS5
+fi
+
+
+
+
+# Commit all NVRAM changes
+nvram commit
