@@ -21,7 +21,7 @@ fi
 
 
 
-# Apply all patches
+# Apply all source patches
 PATH=$ECRS/patches
 declare -A PATCHES
 
@@ -37,4 +37,25 @@ do
 
     # Apply patch to file
     /usr/bin/patch --forward "${PATCHES[$P]}" "$PATH/$P"
+done
+
+
+
+
+# Create and apply all www patches
+PATH=$RELEASE/src/router/www
+ORIGPATH=$ECRS/www/original
+MODSPATH=$ECRS/www/mods
+PATCHPATH=$ECRS/www/patches
+/usr/bin/git checkout -- $PATH
+for f in $ORIGPATH/*
+do
+    FILE=`/usr/bin/basename $f`
+    /usr/bin/diff --unified $f $MODSPATH/$FILE > $PATCHPATH/$FILE.patch
+done
+for f in $PATCHPATH/*.patch
+do
+    FILE=`/usr/bin/basename $f`
+    FILE=${FILE%.*}
+    /usr/bin/patch --forward $PATH/$FILE < $f
 done

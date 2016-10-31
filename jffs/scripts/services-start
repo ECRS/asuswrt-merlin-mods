@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Ensure wireless is not set to insecure methods
-if nvram get wl0_auth_mode_x | grep -q "open\|pskpsk2\|wpawpa2"
+if nvram get wl0_auth_mode_x | grep -q "open\|psk\|pskpsk2\|wpa\|wpawpa2"
 then
     nvram set wl0_auth_mode_x=psk2
 fi
-if nvram get wl1_auth_mode_x | grep -q "open\|pskpsk2\|wpawpa2"
+if nvram get wl1_auth_mode_x | grep -q "open\|psk\|pskpsk2\|wpa\|wpawpa2"
 then
     nvram set wl1_auth_mode_x=psk2
 fi
@@ -37,13 +37,23 @@ nvram set sshd_authkeys=""
 
 
 # Set Wi-Fi SSID's given that they still have ASUS settings
-if nvram get wl0_ssid | grep -q "=ASUS"
+if nvram get wl0_ssid | grep -q "=ASUS.*"
 then
-    nvram set wl0_ssid=ECRS
+    nvram set wl0_ssid=ECRS24G
 fi
-if nvram get wl1_ssid | grep -q "=ASUS_5G"
+if nvram get wl1_ssid | grep -q "=ASUS.*"
 then
-    nvram set wl1_ssid=ECRS5
+    nvram set wl1_ssid=ECRS5G
+fi
+
+
+
+
+# Make sure AiCloud Web Access isn't on port 443 (conflicts
+# with accessing webui if it is)
+if nvram get webdav_https_port | grep -q "^443$"
+then
+    nvram set webdav_https_port=8443
 fi
 
 
