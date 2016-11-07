@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/ecrs/www/original/Advanced_System_Content.asp	2016-10-31 09:30:05.524805518 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/www/mods/Advanced_System_Content.asp	2016-10-31 09:21:55.595963455 -0400
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_System_Content.asp	2016-10-31 09:30:05.524805518 -0400
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2016-11-01 14:44:12.850272558 -0400
 @@ -31,8 +31,6 @@
          isFromHTTPS = true;
  }
@@ -499,7 +499,7 @@
  	
  			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable" style="margin-top:8px;">
  				<thead>
-@@ -1338,110 +936,6 @@
+@@ -1338,110 +936,9 @@
  				</tr>
  			</table>
  
@@ -607,6 +607,9 @@
 -			<div class="apply_gen">
 -				<input name="button" type="button" class="button_gen" onclick="applyRule();" value="<#CTL_apply#>"/>
 -			</div>   
++                        <div class="apply_gen">
++                                <input name="button" type="button" class="button_gen" onclick="applyRule();" value="<#CTL_apply#>"/>
++                        </div>
  		</td>
  	</tr>
  </tbody>

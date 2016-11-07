@@ -936,6 +936,9 @@ function paste_password(){
 				</tr>
 			</table>
 
+                        <div class="apply_gen">
+                                <input name="button" type="button" class="button_gen" onclick="applyRule();" value="<#CTL_apply#>"/>
+                        </div>
 		</td>
 	</tr>
 </tbody>

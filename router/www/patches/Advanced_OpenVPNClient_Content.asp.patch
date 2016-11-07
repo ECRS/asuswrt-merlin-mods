@@ -1,0 +1,17 @@
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_OpenVPNClient_Content.asp	2016-11-01 14:35:07.698272418 -0400
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_OpenVPNClient_Content.asp	2016-11-01 14:34:46.994272530 -0400
+@@ -1200,6 +1200,14 @@
+ 							<input type="text" maxlength="15" class="input_15_table" name="vpn_client_nm" onkeypress="return validator.isIPAddr(this, event);" value="<% nvram_get("vpn_client_nm"); %>">
+ 						</td>
+ 					</tr>
++
++					<tr id="ecrs_vpn_bidirectional_tr">
++						<th>Enable Bi-Directional Communication</th>
++						<td>
++							<input type="radio" name="ecrs_vpn_bidirectional" class="input" value="1" <% nvram_match("ecrs_vpn_bidirectional", "1", "checked"); %>><#checkbox_Yes#>
++							<input type="radio" name="ecrs_vpn_bidirectional" class="input" value="0" <% nvram_match("ecrs_vpn_bidirectional", "0", "checked"); %>><#checkbox_No#>
++						</td>
++					</tr>
+ 				</table>
+ 
+ 				<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable">

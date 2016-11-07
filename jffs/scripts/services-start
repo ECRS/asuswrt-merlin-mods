@@ -37,11 +37,11 @@ nvram set sshd_authkeys=""
 
 
 # Set Wi-Fi SSID's given that they still have ASUS settings
-if nvram get wl0_ssid | grep -q "=ASUS.*"
+if nvram get wl0_ssid | grep -q "^ASUS.*$"
 then
     nvram set wl0_ssid=ECRS24G
 fi
-if nvram get wl1_ssid | grep -q "=ASUS.*"
+if nvram get wl1_ssid | grep -q "^ASUS.*$"
 then
     nvram set wl1_ssid=ECRS5G
 fi
@@ -55,6 +55,16 @@ if nvram get webdav_https_port | grep -q "^443$"
 then
     nvram set webdav_https_port=8443
 fi
+
+
+
+
+# Make sure catapultweboffice.com is whitelisted
+if [ ! -f /jffs/configs/dnsmasq.conf.add ]
+then
+
+fi
+#if
 
 
 

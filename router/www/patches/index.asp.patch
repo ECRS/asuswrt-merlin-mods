@@ -1,0 +1,10 @@
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/index.asp	2016-10-31 10:15:41.452085512 -0400
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/index.asp	2016-10-31 10:14:50.138441511 -0400
+@@ -15,6 +15,7 @@
+ <link rel="stylesheet" type="text/css" href="NM_style.css">
+ <link rel="stylesheet" type="text/css" href="other.css">
+ <link rel="stylesheet" type="text/css" href="/device-map/device-map.css">
++<link rel="stylesheet" type="text/css" href="ecrs.css">
+ <style type="text/css">
+ .contentM_qis{
+ 	position:absolute;

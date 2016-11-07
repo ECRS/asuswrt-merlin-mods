@@ -1,0 +1,16 @@
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/form_style.css	2016-10-31 10:24:33.974213510 -0400
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/form_style.css	2016-10-31 10:25:40.123271525 -0400
+@@ -1,3 +1,13 @@
++/* Hide insecure wireless methods */
++select[name="wl_auth_mode_x"] option[value="open"]
++, select[name="wl_auth_mode_x"] option[value="psk"]
++, select[name="wl_auth_mode_x"] option[value="pskpsk2"]
++, select[name="wl_auth_mode_x"] option[value="wpa"]
++, select[name="wl_auth_mode_x"] option[value="wpawpa2"]
++{
++    display: none;
++}
++
+ /* CSS Document */
+ .buttonok {width:52px; font-family:Verdana; font-size:11px; line-height:25px; text-align:center;}
+ .buttonok a {height:28px; text-decoration: none;}

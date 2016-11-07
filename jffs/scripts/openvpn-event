@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# @author	jdyer, astclair
+# @version	11.2.2016
+#
+# Adaptation of legacy firewall script from RT-N16
+# Recreated to work on an event-based system rather than checking
+# every five minutes.
+#
+# Reference: https://kb.ecrsoft.com/index.php/ASUS_RT-N16_-_Bi-directional_Communication#Firewall_Script
+
+
+# The infamous bi-directional communication firewall script
+logger -t CUSTOMFIREWALL OpenVPN client connection established
+
+MYIP=`ip a s br0 | grep 'inet ' | cut -d '/' -f 1 | sed 's/^.*inet //'`
+HASRULE=`iptables -L FORWARD -n --line-numbers --verbose | grep -e '.*br0.*tun11' | wc -l`
+
+if [[ $(nvram get ecrs_vpn_bidirectional) = 1 ]]
+then
+    logger -t CUSTOMFIREWALL Initializing custom firewall script to allow bidirectional traffic between LAN and VPN
+    if [ $HASRULE -lt 1 ]
+    then
+        logger -t CUSTOMFIREWALL VPN is connected but netfilter rules are missing - adding rules
+        iptables -I FORWARD -i br0 -o tun11 -j ACCEPT
+        iptables -I FORWARD -i tun11 -o br0 -j ACCEPT
+        iptables -t filter -I INPUT 1 -i tun11 --destination "$MYIP" -j ACCEPT
+    else
+        logger -t CUSTOMFIREWALL VPN to LAN netfilter rules detected
+    fi
+else
+    logger -t CUSTOMFIREWALL "Verifying custom firewall script is not configured for bidirectional traffic"
+    if [ $HASRULE -eq 1 ]
+    then
+        logger -t CUSTOMFIREWALL "VPN to LAN netfilter detected but bi-directional communication is disabled - removing rules"
+
+        LINENUM=`iptables -t filter -L -n --line-numbers --verbose | grep "tun11.*${MYIP}.*" | cut -d ' ' -f 1`
+        iptables -t filter -D INPUT $LINENUM
+
+        LINENUM=`iptables -L FORWARD -n --line-numbers --verbose | grep "tun11.*br0" | cut -d ' ' -f 1`
+        iptables -D FORWARD $LINENUM
+
+        LINENUM=`iptables -L FORWARD -n --line-numbers --verbose | grep "br0.*tun11" | cut -d ' ' -f 1`
+        iptables -D FORWARD $LINENUM
+    fi
+fi

@@ -1,0 +1,45 @@
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_BasicFirewall_Content.asp	2016-11-02 10:41:51.344151623 -0400
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_BasicFirewall_Content.asp	2016-11-02 16:40:10.116707987 -0400
+@@ -24,6 +24,7 @@
+ 	if(WebDav_support){
+ 		hideAll(1);
+ 	}
++	showHHTIP(<% nvram_get("ecrs_hht_kiosk_enable"); %>);
+ }
+ 
+ function hideAll(_value){
+@@ -71,6 +72,14 @@
+ function done_validating(action){
+ 	refreshpage();
+ }
++
++function showHHTIP(show)
++{
++    if (parseInt(show))
++        document.getElementById("ecrs_hht_kiosk_ip_tr").style.display = "";
++    else
++        document.getElementById("ecrs_hht_kiosk_ip_tr").style.display = "none";
++}
+ </script>
+ </head>
+ 
+@@ -179,6 +188,19 @@
+ 												</select>
+ 											</td>
+ 										</tr>
++										<tr>
++                                                                                        <th width="40%">Redirect HHT to Kiosk</th>
++                                                                                        <td>
++												<input type="radio" value="1" name="ecrs_hht_kiosk_enable" class="input" onClick="showHHTIP(1);" <% nvram_match("ecrs_hht_kiosk_enable", "1", "checked"); %>><#checkbox_Yes#>
++                                                                                                <input type="radio" value="0" name="ecrs_hht_kiosk_enable" class="input" onClick="showHHTIP(0);" <% nvram_match("ecrs_hht_kiosk_enable", "0", "checked"); %>><#checkbox_No#>
++                                                                                        </td>
++										</tr>
++                                                                                <tr id="ecrs_hht_kiosk_ip_tr">
++                                                                                        <th width="40%">Kiosk IP Address</th>
++                                                                                        <td>
++                                                                                                <input type="text" name="ecrs_hht_kiosk_ip" class="input_15_table" value="<% nvram_get("ecrs_hht_kiosk_ip"); %>">
++                                                                                        </td>
++                                                                                </tr>
+ 									</table>
+ 									<div class="apply_gen">
+ 										<input name="button" type="button" class="button_gen" onclick="applyRule();" value="<#CTL_apply#>"/>
