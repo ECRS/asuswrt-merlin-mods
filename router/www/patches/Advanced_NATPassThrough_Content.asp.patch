@@ -1,0 +1,20 @@
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_NATPassThrough_Content.asp	2016-11-08 09:30:35.263512033 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_NATPassThrough_Content.asp	2016-11-08 09:32:08.931511021 -0500
+@@ -118,17 +118,6 @@
+ 						</tr>
+ 
+ 						<tr>
+-							<th><#NAT_SIP_Passthrough#></th>
+-						<td>
+-												<select name="fw_pt_sip" class="input_option">
+-													<option class="content_input_fd" value="0" <% nvram_match("fw_pt_sip", "0","selected"); %>><#btn_disable#></option>
+-													<option class="content_input_fd" value="2"<% nvram_match("fw_pt_sip", "2","selected"); %>><#WLANConfig11b_WirelessCtrl_button1name#></option>
+-													<option class="content_input_fd" value="1"<% nvram_match("fw_pt_sip", "1","selected"); %>>Enabled + NAT helper</option>
+-												</select>
+-						</td>
+-						</tr>
+-
+-										<tr>
+ 							<th><a class="hintstyle" href="javascript:void(0);" onClick="openHint(7,11);"><#PPPConnection_x_PPPoERelay_itemname#></a></th>
+     	       					<td>
+ 												<select name="fw_pt_pppoerelay" class="input_option">

@@ -10,21 +10,21 @@ ROOT=$RELEASE/src-rt-6.x
 
 # Add copying of ECRS boot-time scripts to the image. This code is not run
 # until after the scripts have been copied into router/rom/scripts dir.
-PATH=$ROOT/router/rom
-cd $PATH
-PATH=$ROOT/router/rom/Makefile
-/usr/bin/git checkout -- $PATH
-if ! /bin/grep --quiet "ECRS mod to load prebuilt configs and scripts" $PATH
-then
-    echo -e "#\tECRS mod to load prebuilt scripts" >> $PATH
-    echo -e "\techo -e \"Adding default configs and scripts to rom\"" >> $PATH
-    echo -e "\tmkdir -p \$(INSTALLDIR)/rom/configs" >> $PATH
-    echo -e "\tmkdir -p \$(INSTALLDIR)/rom/scripts" >> $PATH
-    echo -e "\tcp -rfv configs/* \$(INSTALLDIR)/rom/configs" >> $PATH
-    echo -e "\tcp -rfv scripts/* \$(INSTALLDIR)/rom/scripts" >> $PATH
-    echo -e "\tfind \$(INSTALLDIR)/rom -name \"*\"" >> $PATH
-fi
-cd $ECRS
+#PATH=$ROOT/router/rom
+#cd $PATH
+#PATH=$ROOT/router/rom/Makefile
+#/usr/bin/git checkout -- $PATH
+#if ! /bin/grep --quiet "ECRS mod to load prebuilt configs and scripts" $PATH
+#then
+#    echo -e "#\tECRS mod to load prebuilt scripts" >> $PATH
+#    echo -e "\techo -e \"Adding default configs and scripts to rom\"" >> $PATH
+#    echo -e "\tmkdir -p \$(INSTALLDIR)/rom/configs" >> $PATH
+#    echo -e "\tmkdir -p \$(INSTALLDIR)/rom/scripts" >> $PATH
+#    echo -e "\tcp -rfv configs/* \$(INSTALLDIR)/rom/configs" >> $PATH
+#    echo -e "\tcp -rfv scripts/* \$(INSTALLDIR)/rom/scripts" >> $PATH
+#    echo -e "\tfind \$(INSTALLDIR)/rom -name \"*\"" >> $PATH
+#fi
+#cd $ECRS
 
 
 
@@ -90,5 +90,5 @@ do
     /bin/chmod a+rx $file
 done
 /bin/rm --recursive --force $DIRPATH/configs $DIRPATH/scripts
-/bin/cp --recursive --force --preserve=mode,timestamps --verbose $ECRS/jffs/configs $DIRPATH
+/bin/cp --recursive --force --verbose $ECRS/jffs/configs $DIRPATH
 /bin/cp --recursive --force --preserve=mode,timestamps --verbose $ECRS/jffs/scripts $DIRPATH

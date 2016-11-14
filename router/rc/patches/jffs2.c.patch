@@ -1,6 +1,6 @@
 --- /home/asus/asuswrt-merlin/release/ecrs/router/rc/original/jffs2.c	2016-11-03 09:05:06.152708000 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/jffs2.c	2016-11-03 11:59:53.016707909 -0400
-@@ -316,6 +316,15 @@
++++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/jffs2.c	2016-11-08 08:52:31.835513125 -0500
+@@ -316,6 +316,16 @@
  
  	if (!check_if_dir_exist("/jffs/scripts/")) mkdir("/jffs/scripts/", 0755);
  	if (!check_if_dir_exist("/jffs/configs/")) mkdir("/jffs/configs/", 0755);
@@ -12,7 +12,8 @@
 +
 +	// ECSR mod to symlink stock configs
 +	system("exec rm -rf /jffs/configs/*");
-+	system("exec ln -s /rom/configs/dnsmasq.conf.add /jffs/configs/dnsmasq.conf.add");
++	// system("exec echo \"rebind-domain-ok=/catapultweboffice.com/\" > /jffs/configs/dnsmasq.conf.add");
++        system("exec ln -s /rom/configs/dnsmasq.conf.add /jffs/configs/dnsmasq.conf.add");
  }
  
  void stop_jffs2(int stop)

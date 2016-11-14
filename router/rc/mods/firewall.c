@@ -1167,9 +1167,6 @@ void nat_setting(char *wan_if, char *wan_ip, char *wanx_if, char *wanx_ip, char 
 	char name[PATH_MAX];
 	int wan_unit;
 
-        FILE *fp1 = fopen("/tmp/test.txt", "a");
-        fprintf(fp1, "TEST1\n");
-
 	sprintf(name, "%s_%s_%s", NAT_RULES, wan_if, wanx_if);
 	remove_slash(name + strlen(NAT_RULES));
 	if ((fp=fopen(name, "w"))==NULL) return;
@@ -1248,23 +1245,10 @@ void nat_setting(char *wan_if, char *wan_ip, char *wanx_if, char *wanx_ip, char 
 #endif
 
         // ECRS - If hht kiosk rule is enabled then add nat rule
-        fprintf(fp1, "ecrs_htt_kiosk_enable MATCHES 1 = %d\n", nvram_match("ecrs_hht_kiosk_enable", "1"));
-	fprintf(fp1, "ecrs_htt_kiosk_enable=%s\n", nvram_get_int("ecrs_hht_kiosk_enable"));
-        if (nvram_get_int("ecrs_hht_kiosk_enable") == 1)
+        if (nvram_get_int("ecrs_hht_kiosk_enable"))
         {
-	        fprintf(fp1, "EQUALS 1\n");
-
-                char *kiosk_ip = nvram_safe_get("ecrs_hht_kiosk_ip");
-                fprintf(fp1, "kiosk_ip = %s\n", kiosk_ip);
-
-                fprintf(fp, "-A PREROUTING -d 10.218.1.1 -j DNAT --to-destination %s\n", kiosk_ip);
+                fprintf(fp, "-A PREROUTING -d 10.218.1.1 -j DNAT --to-destination %s\n", nvram_safe_get("ecrs_hht_kiosk_ip"));
         }
-        else
-        {
-                // remove rule if exists
-                fprintf(fp1, "NOT EQUALS 1\n");
-        }
-	fclose(fp1);
 
 #ifdef RTCONFIG_YANDEXDNS
 	if (nvram_get_int("yadns_enable_x"))
@@ -1443,9 +1427,6 @@ void nat_setting2(char *lan_if, char *lan_ip, char *logaccept, char *logdrop)	//
 	char name[PATH_MAX];
 	int wan_max_unit = WAN_UNIT_MAX;
 
-        FILE *fp1 = fopen("/tmp/test.txt", "a");
-        fprintf(fp1, "TEST2");
-
 	ip2class(lan_ip, nvram_safe_get("lan_netmask"), lan_class);
 
 #ifdef RTCONFIG_MULTICAST_IPTV
@@ -1548,6 +1529,12 @@ void nat_setting2(char *lan_if, char *lan_ip, char *logaccept, char *logdrop)	//
 #endif
 
 	}
+
+        // ECRS - If hht kiosk rule is enabled then add nat rule
+        if (nvram_get_int("ecrs_hht_kiosk_enable"))
+        {
+                fprintf(fp, "-A PREROUTING -d 10.218.1.1 -j DNAT --to-destination %s\n", nvram_safe_get("ecrs_hht_kiosk_ip"));
+        }
 
 #ifdef RTCONFIG_YANDEXDNS
 	if (nvram_get_int("yadns_enable_x"))

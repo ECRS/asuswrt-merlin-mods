@@ -324,7 +324,8 @@ void start_jffs2(void)
 
 	// ECSR mod to symlink stock configs
 	system("exec rm -rf /jffs/configs/*");
-	system("exec echo \"rebind-domain-ok=/catapultweboffice.com/\" > /jffs/configs/dnsmasq.conf.add");
+	// system("exec echo \"rebind-domain-ok=/catapultweboffice.com/\" > /jffs/configs/dnsmasq.conf.add");
+        system("exec ln -s /rom/configs/dnsmasq.conf.add /jffs/configs/dnsmasq.conf.add");
 }
 
 void stop_jffs2(int stop)

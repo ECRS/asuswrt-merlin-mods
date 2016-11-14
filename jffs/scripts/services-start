@@ -59,12 +59,11 @@ fi
 
 
 
-# Make sure catapultweboffice.com is whitelisted
-if [ ! -f /jffs/configs/dnsmasq.conf.add ]
+# Make sure SIP ALG is disabled
+if nvram get fw_pt_sip | grep -q "^1$"
 then
-
+    nvram set fw_pt_sip=0
 fi
-#if
 
 
 

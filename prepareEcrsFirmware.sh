@@ -20,10 +20,10 @@ then
     SEP="_"
 fi
 ECRSTAG=`awk -F "=" '/ECRSTAG/ {print $2}' version.conf`
-ECRSNO=`awk -F "=" '/ECRSNO/ {print $2}' version.conf`
-/bin/sed --in-place '/^EXTENDNO=/ s/$/'$SEP$ECRSTAG'.'$ECRSNO'/' $RELEASE/src-rt/version.conf
-((ECRSNO++))
-/bin/sed --in-place 's/^ECRSNO=.*$/ECRSNO='$ECRSNO'/g' version.conf
+ECRSB=`awk -F "=" '/ECRSB/ {print $2}' version.conf`
+/bin/sed --in-place '/^EXTENDNO=/ s/$/'$SEP$ECRSTAG'.'$ECRSB'/' $RELEASE/src-rt/version.conf
+((ECRSB++))
+/bin/sed --in-place 's/^ECRSB=.*$/ECRSB='$ECRSB'/g' version.conf
 
 
 
