@@ -89,6 +89,12 @@ do
     # Set the script to be executable
     /bin/chmod a+rx $file
 done
-/bin/rm --recursive --force $DIRPATH/configs $DIRPATH/scripts
+for file in $ECRS/jffs/nvram-save/*.sh
+do
+    # Set the script to be executable
+    /bin/chmod a+rx $file
+done
+/bin/rm --recursive --force $DIRPATH/configs $DIRPATH/scripts $DIRPATH/nvram-save
 /bin/cp --recursive --force --verbose $ECRS/jffs/configs $DIRPATH
 /bin/cp --recursive --force --preserve=mode,timestamps --verbose $ECRS/jffs/scripts $DIRPATH
+/bin/cp --recursive --force --preserve=mode,timestamps --verbose $ECRS/jffs/nvram-save $DIRPATH

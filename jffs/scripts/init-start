@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Add cron job for USB backup
+# cru a USBBackup "0 20 * * * /jffs/nvram-save/backup.sh"

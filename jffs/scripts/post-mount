@@ -1,0 +1,28 @@
+#!/bin/sh
+
+/usr/bin/logger -t "POST-MOUNT" "Mounted device $1"
+
+# If ASUS drive was mounted
+if [ "$1" = "/tmp/mnt/ASUS" ]
+then
+    # Create backup directories if not exists
+    if [ ! -d "$1/backup" ]
+    then
+        /usr/bin/logger -t "POST-MOUNT" "Creating directory $1/backup"
+        /bin/mkdir "$1/backup"
+    fi
+    if [ ! -d "$1/archive" ]
+    then
+        /usr/bin/logger -t "POST-MOUNT" "Creating directory $1/archive"
+        /bin/mkdir "$1/archive"
+    fi
+    if [ ! -d "$1/archive/weekly" ]
+    then
+        /usr/bin/logger -t "POST-MOUNT" "Creating directory $1/archive/weekly"
+        /bin/mkdir "$1/archive/weekly"
+    fi
+
+    # Add/replace cron job for USB backup
+    /usr/sbin/cru d USBBackup
+    /usr/sbin/cru a USBBackup "0 20 * * * /jffs/nvram-save/backup.sh"
+fi

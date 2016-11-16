@@ -1,5 +1,5 @@
 --- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_System_Content.asp	2016-10-31 09:30:05.524805518 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2016-11-01 14:44:12.850272558 -0400
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2016-11-15 16:26:20.285214387 -0500
 @@ -31,8 +31,6 @@
          isFromHTTPS = true;
  }
@@ -150,7 +150,17 @@
  		if(document.form.btn_ez_radiotoggle[1].disabled == false && document.form.btn_ez_radiotoggle[1].checked == true){
  				document.form.btn_ez_radiotoggle.value=1;
  				document.form.btn_ez_mode.value=0;				
-@@ -403,57 +296,6 @@
+@@ -281,6 +174,9 @@
+ 			updateDateTime();
+ 		}
+ 
++                document.form.ecrs_myecrs_account_id.value = document.form.ecrs_myecrs_account_id.value.toUpperCase();
++		document.form.ecrs_router_serial.value = document.form.ecrs_router_serial.value.toUpperCase();
++
+ 		showLoading();
+ 		document.form.submit();
+ 	}
+@@ -403,57 +299,6 @@
  
  	/*if (!validator.range(document.form.http_lanport, 1, 65535))
  		return false;*/
@@ -208,7 +218,7 @@
  	if(reboot_schedule_support){		
  		if(!document.form.reboot_date_x_Sun.checked && !document.form.reboot_date_x_Mon.checked &&
  		!document.form.reboot_date_x_Tue.checked && !document.form.reboot_date_x_Wed.checked &&
-@@ -750,50 +592,6 @@
+@@ -750,50 +595,6 @@
  	}	
  }
  
@@ -259,7 +269,7 @@
  function check_Timefield_checkbox(){	// To check Date checkbox checked or not and control Time field disabled or not
  	if( document.form.reboot_date_x_Sun.checked == true 
  		|| document.form.reboot_date_x_Mon.checked == true 
-@@ -814,106 +612,11 @@
+@@ -814,106 +615,11 @@
  	}		
  }
  
@@ -366,7 +376,7 @@
  /* password item show or not */
  function pass_checked(obj){
  	switchType(obj, document.form.show_pass_1.checked, true);
-@@ -943,21 +646,6 @@
+@@ -943,21 +649,6 @@
  		document.getElementById("scorebarBorder").style.display = "none";
  }
  
@@ -388,7 +398,7 @@
  /*function sshd_remote_access(obj_value){
  	if(obj_value == 1){
  		document.getElementById('remote_access_port_tr').style.display = "";
-@@ -977,19 +665,6 @@
+@@ -977,19 +668,6 @@
  
  }*/
  
@@ -408,7 +418,7 @@
  function hide_reboot_option(flag){
  	document.getElementById("reboot_schedule_date_tr").style.display = (flag == 1) ? "" : "none";
  	document.getElementById("reboot_schedule_time_tr").style.display = (flag == 1) ? "" : "none";
-@@ -1063,7 +738,6 @@
+@@ -1063,7 +741,6 @@
  <input type="hidden" name="time_zone" value="<% nvram_get("time_zone"); %>">
  <input type="hidden" name="time_zone_dstoff" value="<% nvram_get("time_zone_dstoff"); %>">
  <input type="hidden" name="http_passwd" value="" disabled>
@@ -416,7 +426,67 @@
  <input type="hidden" name="btn_ez_mode" value="<% nvram_get("btn_ez_mode"); %>">
  <input type="hidden" name="reboot_schedule" value="<% nvram_get_x("","reboot_schedule"); %>" disabled>
  <input type="hidden" name="reboot_schedule_enable" value="<% nvram_get_x("","reboot_schedule_enable"); %>">
-@@ -1127,82 +801,6 @@
+@@ -1093,7 +770,58 @@
+ 			<div style="margin-left:5px;margin-top:10px;margin-bottom:10px"><img src="/images/New_ui/export/line_export.png"></div>
+ 			<div class="formfontdesc"><#Syste_title#></div>
+ 
+-			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable">
++			<table class="FormTable" width="100%" cellspacing="0" cellpadding="4" bordercolor="#6b8fa3" border="1" align="center">
++				<thead>
++					<tr>
++						<td colspan="2">ECRS Router Information</td>
++					</tr>
++				</thead>
++				<tbody>
++					<tr>
++						<th width="40%">myECRS Account ID</th>
++						<td>
++							<div><input id="ecrs_myecrs_account_id" name="ecrs_myecrs_account_id" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_myecrs_account_id"); %>"></div>
++						</td>
++					</tr>
++					<tr>
++						<th width="40%">myECRS Account Name</th>
++						<td>
++                                                        <div><input id="ecrs_myecrs_account_name" name="ecrs_myecrs_account_name" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" value="<% nvram_get("ecrs_myecrs_account_name"); %>"></div>
++						</td>
++					</tr>
++					<tr>
++						<th width="40%">Router Serial Number</th>
++						<td>
++                                                        <div><input id="ecrs_router_serial" name="ecrs_router_serial" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_router_serial"); %>"></div>
++						</td>
++					</tr>
++					<tr>
++						<th width="40%">WAN MAC Address</th>
++						<td>
++                                                        <div><% nvram_get("et0macaddr"); %></div>
++						</td>
++					</tr>
++				</tbody>
++			</table>
++
++                        <table class="FormTable" width="100%" cellspacing="0" cellpadding="4" bordercolor="#6b8fa3" border="1" align="center" style="margin-top: 8px;">
++                                <thead>
++                                        <tr>
++                                                <td colspan="2">USB Backup</td>
++                                        </tr>
++                                </thead>
++                                <tbody>
++                                        <tr>
++                                                <th width="40%"><a class="hintstyle" href="javascript:void(0);" onClick="openHint(11,9)">Enable USB Backup</a></th>
++                                                <td>
++							<input type="radio" value="1" name="ecrs_backup_usb_enable" <% nvram_match("ecrs_backup_usb_enable", "1", "checked"); %>><#checkbox_Yes#>
++							<input type="radio" value="0" name="ecrs_backup_usb_enable" <% nvram_match("ecrs_backup_usb_enable", "0", "checked"); %>><#checkbox_No#>
++                                                </td>
++                                        </tr>
++                                </tbody>
++                        </table>
++
++			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable" style="margin-top: 8px;">
+ 			<thead>
+ 				<tr>
+ 					<td colspan="2"><#PASS_changepasswd#></td>
+@@ -1127,82 +855,6 @@
  					</td>
  				</tr>
  			</table>
@@ -499,7 +569,7 @@
  	
  			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable" style="margin-top:8px;">
  				<thead>
-@@ -1338,110 +936,9 @@
+@@ -1338,110 +990,9 @@
  				</tr>
  			</table>
  

@@ -1,5 +1,5 @@
 --- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/state.js	2016-10-31 10:22:48.785645510 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2016-11-08 15:19:00.401966183 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2016-11-16 11:21:44.309213726 -0500
 @@ -313,7 +313,7 @@
  var dualWAN_support = isSupport("dualwan");
  var ruisp_support = isSupport("ruisp");
@@ -54,7 +54,46 @@
  		return true;
  	}
  	else{
-@@ -2356,13 +2357,12 @@
+@@ -1751,7 +1752,37 @@
+ 			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=wireless\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+ 		else
+ 			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=detect\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+-	}	
++	}
++
++	// ECRS - Backup status
++	var ecrs_backup_usb_enable = '<% nvram_get("ecrs_backup_usb_enable"); %>';
++	if (ecrs_backup_usb_enable == 1)
++	{
++		var ecrs_backup_usb_status = '<% nvram_get("ecrs_backup_usb_status"); %>';
++		var color = '', text1 = '', text2 = '';
++		switch (parseInt(ecrs_backup_usb_status))
++		{
++			case -1:
++				color = 'orange';
++				text1 = 'PENDING';
++				text2 = 'Awaiting first backup';
++				break;
++			case 0:
++				color = 'green';
++				text1 = 'SUCCESS';
++				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
++				break;
++			case 1:
++				color = 'red';
++				text1 = 'FAILURE';
++				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
++				break;
++			default:
++		}
++
++		menu1_code += '<div style="margin:10px 0px 0px 10px;font-weight:bold;"><span style="color:white;">Backup Status:</span> <span style="color:' + color + '";>' + text1 + '</span></div>';
++		menu1_code += '<div style="margin-left: 10px;">' + text2 + '</div>';
++	}
+ 
+ 	// Feature
+ 	menu1_code += '<div class="m0_r" style="margin-top:10px;" id="option0"><table width="192px" height="37px"><tr><td><#menu5_1_1#></td></tr></table></div>\n';
+@@ -2356,13 +2387,12 @@
  
  	// FAQ searching bar{
  	footer_code += '<div style="margin-top:-75px;margin-left:205px;"><table width="765px" border="0" align="center" cellpadding="0" cellspacing="0"><tr>';

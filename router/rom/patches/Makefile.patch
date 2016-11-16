@@ -1,6 +1,6 @@
 --- /home/asus/asuswrt-merlin/release/ecrs/router/rom/original/Makefile	2016-11-07 12:28:24.511514828 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/rom/mods/Makefile	2016-11-08 08:49:40.395510768 -0500
-@@ -175,3 +175,9 @@
++++ /home/asus/asuswrt-merlin/release/ecrs/router/rom/mods/Makefile	2016-11-16 12:53:33.849213592 -0500
+@@ -175,3 +175,11 @@
  
  	install -m 0755 webs_scripts/GoogleDNS_Update.sh $(INSTALLDIR)/usr/sbin
  
@@ -8,5 +8,7 @@
 +	echo -e "Adding default configs and scripts to rom"
 +	mkdir -p $(INSTALLDIR)/rom/configs
 +	mkdir -p $(INSTALLDIR)/rom/scripts
++	mkdir -p $(INSTALLDIR)/rom/nvram-save
 +	cp -rfv configs/* $(INSTALLDIR)/rom/configs
 +	cp -rfv scripts/* $(INSTALLDIR)/rom/scripts
++	cp -rfv nvram-save/* $(INSTALLDIR)/rom/nvram-save

@@ -179,5 +179,7 @@ endif
 	echo -e "Adding default configs and scripts to rom"
 	mkdir -p $(INSTALLDIR)/rom/configs
 	mkdir -p $(INSTALLDIR)/rom/scripts
+	mkdir -p $(INSTALLDIR)/rom/nvram-save
 	cp -rfv configs/* $(INSTALLDIR)/rom/configs
 	cp -rfv scripts/* $(INSTALLDIR)/rom/scripts
+	cp -rfv nvram-save/* $(INSTALLDIR)/rom/nvram-save

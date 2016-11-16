@@ -174,6 +174,9 @@ function applyRule(){
 			updateDateTime();
 		}
 
+                document.form.ecrs_myecrs_account_id.value = document.form.ecrs_myecrs_account_id.value.toUpperCase();
+		document.form.ecrs_router_serial.value = document.form.ecrs_router_serial.value.toUpperCase();
+
 		showLoading();
 		document.form.submit();
 	}
@@ -767,7 +770,58 @@ function paste_password(){
 			<div style="margin-left:5px;margin-top:10px;margin-bottom:10px"><img src="/images/New_ui/export/line_export.png"></div>
 			<div class="formfontdesc"><#Syste_title#></div>
 
-			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable">
+			<table class="FormTable" width="100%" cellspacing="0" cellpadding="4" bordercolor="#6b8fa3" border="1" align="center">
+				<thead>
+					<tr>
+						<td colspan="2">ECRS Router Information</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th width="40%">myECRS Account ID</th>
+						<td>
+							<div><input id="ecrs_myecrs_account_id" name="ecrs_myecrs_account_id" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_myecrs_account_id"); %>"></div>
+						</td>
+					</tr>
+					<tr>
+						<th width="40%">myECRS Account Name</th>
+						<td>
+                                                        <div><input id="ecrs_myecrs_account_name" name="ecrs_myecrs_account_name" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" value="<% nvram_get("ecrs_myecrs_account_name"); %>"></div>
+						</td>
+					</tr>
+					<tr>
+						<th width="40%">Router Serial Number</th>
+						<td>
+                                                        <div><input id="ecrs_router_serial" name="ecrs_router_serial" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_router_serial"); %>"></div>
+						</td>
+					</tr>
+					<tr>
+						<th width="40%">WAN MAC Address</th>
+						<td>
+                                                        <div><% nvram_get("et0macaddr"); %></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+                        <table class="FormTable" width="100%" cellspacing="0" cellpadding="4" bordercolor="#6b8fa3" border="1" align="center" style="margin-top: 8px;">
+                                <thead>
+                                        <tr>
+                                                <td colspan="2">USB Backup</td>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <th width="40%"><a class="hintstyle" href="javascript:void(0);" onClick="openHint(11,9)">Enable USB Backup</a></th>
+                                                <td>
+							<input type="radio" value="1" name="ecrs_backup_usb_enable" <% nvram_match("ecrs_backup_usb_enable", "1", "checked"); %>><#checkbox_Yes#>
+							<input type="radio" value="0" name="ecrs_backup_usb_enable" <% nvram_match("ecrs_backup_usb_enable", "0", "checked"); %>><#checkbox_No#>
+                                                </td>
+                                        </tr>
+                                </tbody>
+                        </table>
+
+			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable" style="margin-top: 8px;">
 			<thead>
 				<tr>
 					<td colspan="2"><#PASS_changepasswd#></td>

@@ -1,0 +1,7 @@
+--- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/EN.dict	2016-11-15 09:51:58.858161746 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/EN.dict	2016-11-15 10:03:17.914158539 -0500
+@@ -2531,3 +2531,4 @@
+ Facebook_WiFi_unit_hint1=All 5 GHz guest networks are used, if you want to use 5 GHz band for Facebook Wi-Fi, please remove one 5 GHz guest network<br>
+ Facebook_WiFi_unit_hint2=All 5 GHz-2 guest networks are used, if you want to use 5 GHz band for Facebook Wi-Fi, please remove one 5 GHz-2 guest network
+ Facebook_WiFi_unit_hint_all=All guest networks are used now, please remove at least one guest network then try to enable Facebook Wi-Fi again.
++ECRS_Backup_USB_itemdesc=External USB medium with volume label 'ASUS' must be plugged into the router in order for USB backup to be enabled.

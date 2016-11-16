@@ -1752,7 +1752,37 @@ function show_menu(){
 			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=wireless\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 		else
 			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=detect\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
-	}	
+	}
+
+	// ECRS - Backup status
+	var ecrs_backup_usb_enable = '<% nvram_get("ecrs_backup_usb_enable"); %>';
+	if (ecrs_backup_usb_enable == 1)
+	{
+		var ecrs_backup_usb_status = '<% nvram_get("ecrs_backup_usb_status"); %>';
+		var color = '', text1 = '', text2 = '';
+		switch (parseInt(ecrs_backup_usb_status))
+		{
+			case -1:
+				color = 'orange';
+				text1 = 'PENDING';
+				text2 = 'Awaiting first backup';
+				break;
+			case 0:
+				color = 'green';
+				text1 = 'SUCCESS';
+				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
+				break;
+			case 1:
+				color = 'red';
+				text1 = 'FAILURE';
+				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
+				break;
+			default:
+		}
+
+		menu1_code += '<div style="margin:10px 0px 0px 10px;font-weight:bold;"><span style="color:white;">Backup Status:</span> <span style="color:' + color + '";>' + text1 + '</span></div>';
+		menu1_code += '<div style="margin-left: 10px;">' + text2 + '</div>';
+	}
 
 	// Feature
 	menu1_code += '<div class="m0_r" style="margin-top:10px;" id="option0"><table width="192px" height="37px"><tr><td><#menu5_1_1#></td></tr></table></div>\n';
