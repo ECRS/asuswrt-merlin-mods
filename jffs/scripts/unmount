@@ -1,0 +1,19 @@
+#!/bin/sh
+
+/usr/bin/logger -t "UNMOUNT" "Unmounted device $1"
+
+# If ASUS drive was unmounted
+if [ "$1" = "/tmp/mnt/ASUS" ]
+then
+    if [ "$(/bin/nvram get ecrs_backup_usb_enable)" -eq "1" ]
+    then
+        /usr/bin/logger -t "UNMOUNT" "USB backup device ($1) unmounted from router - backups will fail until drive is put back or USB backup is disabled"
+
+        # Set the ecrs_backup_usb_status and text
+        /bin/nvram set ecrs_backup_usb_status=2
+        /bin/nvram set ecrs_backup_usb_text="Backup medium missing"
+        /bin/nvram commit
+    fi
+
+    /usr/sbin/cru d USBBackup
+fi

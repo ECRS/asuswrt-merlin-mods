@@ -1,5 +1,5 @@
 --- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/state.js	2016-10-31 10:22:48.785645510 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2016-11-16 11:21:44.309213726 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2016-11-16 16:17:54.941213969 -0500
 @@ -313,7 +313,7 @@
  var dualWAN_support = isSupport("dualwan");
  var ruisp_support = isSupport("ruisp");
@@ -54,7 +54,7 @@
  		return true;
  	}
  	else{
-@@ -1751,7 +1752,37 @@
+@@ -1751,7 +1752,40 @@
  			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=wireless\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
  		else
  			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=detect\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
@@ -85,15 +85,18 @@
 +				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
 +				break;
 +			default:
++				color = 'yellow';
++				text1 = 'UNKNOWN';
++				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
 +		}
 +
 +		menu1_code += '<div style="margin:10px 0px 0px 10px;font-weight:bold;"><span style="color:white;">Backup Status:</span> <span style="color:' + color + '";>' + text1 + '</span></div>';
-+		menu1_code += '<div style="margin-left: 10px;">' + text2 + '</div>';
++		menu1_code += '<div style="margin: 0px 10px;">' + text2 + '</div>';
 +	}
  
  	// Feature
  	menu1_code += '<div class="m0_r" style="margin-top:10px;" id="option0"><table width="192px" height="37px"><tr><td><#menu5_1_1#></td></tr></table></div>\n';
-@@ -2356,13 +2387,12 @@
+@@ -2356,13 +2390,12 @@
  
  	// FAQ searching bar{
  	footer_code += '<div style="margin-top:-75px;margin-left:205px;"><table width="765px" border="0" align="center" cellpadding="0" cellspacing="0"><tr>';

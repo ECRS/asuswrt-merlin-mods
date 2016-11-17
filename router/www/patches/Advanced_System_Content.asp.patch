@@ -1,5 +1,5 @@
 --- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_System_Content.asp	2016-10-31 09:30:05.524805518 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2016-11-15 16:26:20.285214387 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2016-11-17 09:56:06.345213756 -0500
 @@ -31,8 +31,6 @@
          isFromHTTPS = true;
  }
@@ -64,7 +64,27 @@
  
  	if(tmo_support){
  		document.getElementById("telnet_tr").style.display = "none";
-@@ -175,32 +140,6 @@
+@@ -166,6 +131,19 @@
+ 		document.form.telnetd_enable[1].disabled = false;
+ 	}	
+ 
++        if (document.form.ecrs_myecrs_account_id.value != '')
++	{
++		document.form.ecrs_myecrs_account_id.outerHTML = '<div>' + document.form.ecrs_myecrs_account_id.value + '</div>';
++	}
++        if (document.form.ecrs_myecrs_account_name.value != '')
++        {
++                document.form.ecrs_myecrs_account_name.outerHTML = '<div>' + document.form.ecrs_myecrs_account_name.value + '</div>';
++        }
++        if (document.form.ecrs_router_serial.value != '')
++        {
++                document.form.ecrs_router_serial.outerHTML = '<div style="font-family: &quot;Courier New&quot;, Courier, monospace;">' + document.form.ecrs_router_serial.value + '</div>';
++        }
++
+ }
+ 
+ var time_zone_tmp="";
+@@ -175,32 +153,6 @@
  
  function applyRule(){
  	if(validForm()){
@@ -97,7 +117,7 @@
  		if(document.form.http_passwd2.value.length > 0){
  			document.form.http_passwd.value = document.form.http_passwd2.value;
  			document.form.http_passwd.disabled = false;
-@@ -218,52 +157,6 @@
+@@ -218,52 +170,6 @@
  				document.form.time_zone.value = document.form.time_zone_select.value;
  		}
  		
@@ -150,7 +170,7 @@
  		if(document.form.btn_ez_radiotoggle[1].disabled == false && document.form.btn_ez_radiotoggle[1].checked == true){
  				document.form.btn_ez_radiotoggle.value=1;
  				document.form.btn_ez_mode.value=0;				
-@@ -281,6 +174,9 @@
+@@ -281,6 +187,9 @@
  			updateDateTime();
  		}
  
@@ -160,7 +180,7 @@
  		showLoading();
  		document.form.submit();
  	}
-@@ -403,57 +299,6 @@
+@@ -403,57 +312,6 @@
  
  	/*if (!validator.range(document.form.http_lanport, 1, 65535))
  		return false;*/
@@ -218,7 +238,7 @@
  	if(reboot_schedule_support){		
  		if(!document.form.reboot_date_x_Sun.checked && !document.form.reboot_date_x_Mon.checked &&
  		!document.form.reboot_date_x_Tue.checked && !document.form.reboot_date_x_Wed.checked &&
-@@ -750,50 +595,6 @@
+@@ -750,50 +608,6 @@
  	}	
  }
  
@@ -269,7 +289,7 @@
  function check_Timefield_checkbox(){	// To check Date checkbox checked or not and control Time field disabled or not
  	if( document.form.reboot_date_x_Sun.checked == true 
  		|| document.form.reboot_date_x_Mon.checked == true 
-@@ -814,106 +615,11 @@
+@@ -814,106 +628,11 @@
  	}		
  }
  
@@ -376,7 +396,7 @@
  /* password item show or not */
  function pass_checked(obj){
  	switchType(obj, document.form.show_pass_1.checked, true);
-@@ -943,21 +649,6 @@
+@@ -943,21 +662,6 @@
  		document.getElementById("scorebarBorder").style.display = "none";
  }
  
@@ -398,7 +418,7 @@
  /*function sshd_remote_access(obj_value){
  	if(obj_value == 1){
  		document.getElementById('remote_access_port_tr').style.display = "";
-@@ -977,19 +668,6 @@
+@@ -977,19 +681,6 @@
  
  }*/
  
@@ -418,7 +438,7 @@
  function hide_reboot_option(flag){
  	document.getElementById("reboot_schedule_date_tr").style.display = (flag == 1) ? "" : "none";
  	document.getElementById("reboot_schedule_time_tr").style.display = (flag == 1) ? "" : "none";
-@@ -1063,7 +741,6 @@
+@@ -1063,7 +754,6 @@
  <input type="hidden" name="time_zone" value="<% nvram_get("time_zone"); %>">
  <input type="hidden" name="time_zone_dstoff" value="<% nvram_get("time_zone_dstoff"); %>">
  <input type="hidden" name="http_passwd" value="" disabled>
@@ -426,7 +446,7 @@
  <input type="hidden" name="btn_ez_mode" value="<% nvram_get("btn_ez_mode"); %>">
  <input type="hidden" name="reboot_schedule" value="<% nvram_get_x("","reboot_schedule"); %>" disabled>
  <input type="hidden" name="reboot_schedule_enable" value="<% nvram_get_x("","reboot_schedule_enable"); %>">
-@@ -1093,7 +770,58 @@
+@@ -1093,7 +783,58 @@
  			<div style="margin-left:5px;margin-top:10px;margin-bottom:10px"><img src="/images/New_ui/export/line_export.png"></div>
  			<div class="formfontdesc"><#Syste_title#></div>
  
@@ -486,7 +506,7 @@
  			<thead>
  				<tr>
  					<td colspan="2"><#PASS_changepasswd#></td>
-@@ -1127,82 +855,6 @@
+@@ -1127,82 +868,6 @@
  					</td>
  				</tr>
  			</table>
@@ -569,7 +589,7 @@
  	
  			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable" style="margin-top:8px;">
  				<thead>
-@@ -1338,110 +990,9 @@
+@@ -1338,110 +1003,9 @@
  				</tr>
  			</table>
  

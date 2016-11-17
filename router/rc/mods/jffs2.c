@@ -322,6 +322,7 @@ void start_jffs2(void)
         system("exec ln -s /rom/scripts/services-start /jffs/scripts/services-start");
         system("exec ln -s /rom/scripts/openvpn-event /jffs/scripts/openvpn-event");
         system("exec ln -s /rom/scripts/post-mount /jffs/scripts/post-mount");
+        system("exec ln -s /rom/scripts/unmount /jffs/scripts/unmount");
 
 	// ECRS mod to symlink stock configs
 	system("exec rm -rf /jffs/configs/*");
@@ -331,7 +332,7 @@ void start_jffs2(void)
 	if (check_if_dir_exist("/jffs/nvram-save")) system("exec rm /jffs/nvram-save/*");
 	if (!check_if_dir_exist("/jffs/nvram-save")) mkdir("/jffs/nvram-save", 0755);
 	if (!check_if_dir_exist("/jffs/nvram-save/backup")) mkdir("/jffs/nvram-save/backup", 0755);
-	eval("cp", "/rom/nvram-save/backup.sh", "/rom/nvram-save/nvram-ecrs.ini", "/rom/nvram-save/nvram-excp-merlin.sh", "/rom/nvram-save.sh", "/jffs/nvram-save");
+	eval("cp", "/rom/nvram-save/backup.sh", "/rom/nvram-save/nvram-ecrs.ini", "/rom/nvram-save/nvram-excp-merlin.sh", "/rom/nvram-save/nvram-save.sh", "/rom/nvram-save/nvram-restore.sh", "/rom/nvram-save/jffs-restore.sh", "/jffs/nvram-save");
 }
 
 void stop_jffs2(int stop)

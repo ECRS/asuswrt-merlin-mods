@@ -131,6 +131,19 @@ function initial(){
 		document.form.telnetd_enable[1].disabled = false;
 	}	
 
+        if (document.form.ecrs_myecrs_account_id.value != '')
+	{
+		document.form.ecrs_myecrs_account_id.outerHTML = '<div>' + document.form.ecrs_myecrs_account_id.value + '</div>';
+	}
+        if (document.form.ecrs_myecrs_account_name.value != '')
+        {
+                document.form.ecrs_myecrs_account_name.outerHTML = '<div>' + document.form.ecrs_myecrs_account_name.value + '</div>';
+        }
+        if (document.form.ecrs_router_serial.value != '')
+        {
+                document.form.ecrs_router_serial.outerHTML = '<div style="font-family: &quot;Courier New&quot;, Courier, monospace;">' + document.form.ecrs_router_serial.value + '</div>';
+        }
+
 }
 
 var time_zone_tmp="";

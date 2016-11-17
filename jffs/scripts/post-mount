@@ -22,6 +22,24 @@ then
         /bin/mkdir "$1/archive/weekly"
     fi
 
+
+    # If drive was in a missing state then set it to FAIL
+    # if no backup created in two days, otherwise set to SUCCESS
+    if [ "$(/bin/nvram get ecrs_backup_usb_status)" -eq "2" ]
+    then
+        if [ "$(/usr/bin/find /tmp/mnt/ASUS/archive -mtime -2 | /usr/bin/wc -l)" -gt "0" ]
+        then
+            /bin/nvram set ecrs_backup_usb_status=0
+            /bin/nvram set ecrs_backup_usb_text=""
+        else
+            /bin/nvram set ecrs_backup_usb_status=1
+            /bin/nvram set ecrs_backup_usb_text=""
+        fi
+
+        /bin/nvram commit
+    fi
+
+
     # Add/replace cron job for USB backup
     /usr/sbin/cru d USBBackup
     /usr/sbin/cru a USBBackup "0 20 * * * /jffs/nvram-save/backup.sh"

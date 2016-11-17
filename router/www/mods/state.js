@@ -1778,10 +1778,13 @@ function show_menu(){
 				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
 				break;
 			default:
+				color = 'yellow';
+				text1 = 'UNKNOWN';
+				text2 = '<% nvram_get("ecrs_backup_usb_text"); %>';
 		}
 
 		menu1_code += '<div style="margin:10px 0px 0px 10px;font-weight:bold;"><span style="color:white;">Backup Status:</span> <span style="color:' + color + '";>' + text1 + '</span></div>';
-		menu1_code += '<div style="margin-left: 10px;">' + text2 + '</div>';
+		menu1_code += '<div style="margin: 0px 10px;">' + text2 + '</div>';
 	}
 
 	// Feature
