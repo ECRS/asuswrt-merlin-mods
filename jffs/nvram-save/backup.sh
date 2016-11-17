@@ -129,6 +129,9 @@ then
         # Try to do a backup
         if /bin/sh "$BACKUPDIR/nvram-save.sh" -nojffs -m -i "$BACKUPDIR/nvram-ecrs.ini"
         then
+            # Remove the nvram-util.log so that next iteration doesn't create multiple restore scripts
+            /bin/rm "$BACKUPDIR/nvram-util.log"
+
             # Verify archive directory exists
             if [ -d "$ARCHIVEDIR" ]
             then
