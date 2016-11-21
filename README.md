@@ -55,3 +55,8 @@
 [10/19/16 12:37:50] <@RMerlin> So, have your scripts in others/ and symlink from /rom/yourscript to /jffs/scripts/yourscript
 [10/19/16 12:37:59] <@RMerlin> Symlink must be done by rc/jffs2.c
 </pre>
+
+
+## When adding new NVRAM values
+1. Also add the value to jffs/nvram-save/nvram-ecrs.ini
+2. Also add the value to nvram/setDefaults.sh

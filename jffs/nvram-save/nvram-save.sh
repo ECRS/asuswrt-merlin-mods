@@ -139,6 +139,7 @@ migrate=0
 jffsbackup=1
 userscript=1
 clean=1
+vpnbackup=1
 setstring="nvram set"
 skipvar="#### clkfreq"
 initype="standard"
@@ -161,6 +162,7 @@ case "$input" in
 		echo "          -nojffs      Skip backup of jffs storage"
 		echo "          -nouser      Skip execution of user exit script"
 #		echo "          -noclean     Create old style restore script to restore all variables only"
+		echo "		-novpn	     Skip backup of the OpenVPN certificates"
 		echo ""
 		exit 0
 		;;
@@ -202,6 +204,9 @@ case "$input" in
 		;;
 	"-noclean"|"-NOCLEAN")
 		clean=0
+		;;
+	"-novpn"|"-NOVPN")
+		vpnbackup=0
 		;;
 	*)
 		echo "Unknown option $1"
@@ -404,6 +409,15 @@ if [ -f "$cwd/$excfile" ]; then
 	echo "" >>$outfile
 fi
 
+# Process openvpn certs
+echo "if [ -d \"openvpn\" ]; then" >>$outfile
+echo "    if [ $isfat = 0 ]; then" >>$outfile
+echo "        cp -af \"openvpn/.\" \"/jffs/openvpn\"" >>$outfile
+echo "    else" >>$outfile
+echo "        cp -dRf \"openvpn/.\" \"/jffs/openvpn\"" >>$outfile
+echo "    fi" >>$outfile
+echo "fi" >>$outfile
+
 # commit changes and close restore script
 if [ $clean = 1 ]; then
 	echo "rm -f \$tmpfile" >>$outfile
@@ -445,6 +459,25 @@ if [[ -d "/jffs" && $jffsbackup -eq 1 ]]; then
 	# Update runlog
 	echo "$(printf "%-20s" jffs-save)$(printf "%-20s" $rundate$dash$macid)$(date)" >>$runlog
 
+fi
+
+# backup openvpn certs if configured
+if [[ -d "/jffs/openvpn" && $vpnbackup -eq 1 ]]; then
+	vpndir="$dwd/openvpn"
+
+	if [ ! -d "$vpndir" ]; then
+		mkdir "$vpndir"
+	fi
+	if [ $isfat = 0 ]; then
+	    cp -af "/jffs/openvpn/." "$vpndir"
+	else
+	    cp -dRf "/jffs/openvpn/." "$vpndir"
+	fi
+	touch "$vpndir"
+	logger -s -t $scr_name  "Complete: OpenVPN certificates saved to "$vpndir
+	echo ""
+	# Update runlog
+	echo "$(printf "%-20s" ovpn-save)$(printf "%-20s" $rundate$dash$macid)$(date)" >>$runlog
 fi
 
 # Process user exit if it exists

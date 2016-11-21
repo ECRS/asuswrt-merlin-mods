@@ -62,9 +62,23 @@ notify()
 {
     /usr/bin/logger -t "USB BACKUP" "Sending backup notification"
 
-    # Send email to support
-    # How do?
-    # /usr/sbin/sendmail -f info@ecrs.com -S smtp-relay.gmail.com -w 10 astclair@ecrs.com "Test Subject" "Test message text"
+    URL="$(/bin/nvram get ecrs_backup_usb_notifyurl)"
+    SERIAL="$(/bin/nvram get ecrs_router_serial)"
+    NAME="$(/bin/nvram get ecrs_myecrs_account_name)"
+    ID="$(/bin/nvram get ecrs_myecrs_account_id)"
+    MODEL="$(/bin/nvram get model)"
+
+    /usr/bin/logger -t "USB BACKUP" "Data being sent: SERIAL=${SERIAL} | NAME=${NAME} | ID=${ID} | MODEL=${MODEL}"
+
+    RES=$(/usr/sbin/curl --header "Content-type: application/x-www-form-urlencoded"\
+     --request POST\
+     --connect-timeout 60\
+     --data-urlencode "data[serial]=${SERIAL}"\
+     --data-urlencode "data[accountName]=${NAME}"\
+     --data-urlencode "data[accountId]=${ID}"\
+     --data-urlencode "data[model]=${MODEL}" $URL)
+
+    /usr/bin/logger -t "USB BACKUP" "Backup notification result: $RES"
 }
 
 
@@ -125,19 +139,27 @@ then
         backupfail 1
     else
         TS=$(date +"%Y%m%d%H%M")
+
+        # Remove the nvram-util.log if exists
+        /bin/rm "$BACKUPDIR/nvram-util.log"
+
+        # Clean backup directory if exists
+        /bin/rm -rf "$BACKUPDIR/backup"
+        /bin/mkdir "$BACKUPDIR/backup"
         
         # Try to do a backup
         if /bin/sh "$BACKUPDIR/nvram-save.sh" -nojffs -m -i "$BACKUPDIR/nvram-ecrs.ini"
         then
-            # Remove the nvram-util.log so that next iteration doesn't create multiple restore scripts
-            /bin/rm "$BACKUPDIR/nvram-util.log"
-
             # Verify archive directory exists
             if [ -d "$ARCHIVEDIR" ]
             then
                 # Compress and archive backup
-                if /bin/tar -zcf "$ARCHIVEDIR/$TS.tar.gz" "$BACKUPDIR/backup"
+                if /bin/tar -zcf "$ARCHIVEDIR/$TS.tar.gz" -C "$BACKUPDIR" nvram-util.log backup
                 then
+                    # Remove the nvram-util.log so that next iteration doesn't create multiple restore scripts
+                    /bin/rm "$BACKUPDIR/nvram-util.log"
+
+                    # Clean backup directory
                     /bin/rm -rf "$BACKUPDIR/backup"
                     /bin/mkdir "$BACKUPDIR/backup"
                     backupsuccess "$TS"
