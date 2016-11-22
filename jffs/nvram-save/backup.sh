@@ -67,8 +67,9 @@ notify()
     NAME="$(/bin/nvram get ecrs_myecrs_account_name)"
     ID="$(/bin/nvram get ecrs_myecrs_account_id)"
     MODEL="$(/bin/nvram get model)"
+    MESSAGE="$(/bin/nvram get ecrs_backup_usb_text)"
 
-    /usr/bin/logger -t "USB BACKUP" "Data being sent: SERIAL=${SERIAL} | NAME=${NAME} | ID=${ID} | MODEL=${MODEL}"
+    /usr/bin/logger -t "USB BACKUP" "Data being sent: SERIAL=${SERIAL} | NAME=${NAME} | ID=${ID} | MODEL=${MODEL} | MESSAGE=${MESSAGE}"
 
     RES=$(/usr/sbin/curl --header "Content-type: application/x-www-form-urlencoded"\
      --request POST\
@@ -76,7 +77,8 @@ notify()
      --data-urlencode "data[serial]=${SERIAL}"\
      --data-urlencode "data[accountName]=${NAME}"\
      --data-urlencode "data[accountId]=${ID}"\
-     --data-urlencode "data[model]=${MODEL}" "$URL")
+     --data-urlencode "data[model]=${MODEL}"\
+     --data-urlencode "data[message]=${MESSAGE}" "$URL")
 
     /usr/bin/logger -t "USB BACKUP" "Backup notification result: $RES"
 }

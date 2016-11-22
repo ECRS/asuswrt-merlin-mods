@@ -6,11 +6,6 @@
 if [ "$1" = "/tmp/mnt/ASUS" ]
 then
     # Create backup directories if not exists
-    if [ ! -d "$1/backup" ]
-    then
-        /usr/bin/logger -t "POST-MOUNT" "Creating directory $1/backup"
-        /bin/mkdir "$1/backup"
-    fi
     if [ ! -d "$1/archive" ]
     then
         /usr/bin/logger -t "POST-MOUNT" "Creating directory $1/archive"
@@ -23,16 +18,16 @@ then
     fi
 
 
-    # If drive was in a missing state then set it to FAIL
+    # If drive was in a missing state then set it to PENDING
     # if no backup created in two days, otherwise set to SUCCESS
     if [ "$(/bin/nvram get ecrs_backup_usb_status)" -eq "2" ]
     then
-        if [ "$(/usr/bin/find /tmp/mnt/ASUS/archive -mtime -2 | /usr/bin/wc -l)" -gt "0" ]
+        if [ "$(/usr/bin/find /tmp/mnt/ASUS/archive/* -mtime -2 | /usr/bin/wc -l)" -gt "1" ]
         then
             /bin/nvram set ecrs_backup_usb_status=0
             /bin/nvram set ecrs_backup_usb_text=""
         else
-            /bin/nvram set ecrs_backup_usb_status=1
+            /bin/nvram set ecrs_backup_usb_status=-1
             /bin/nvram set ecrs_backup_usb_text=""
         fi
 

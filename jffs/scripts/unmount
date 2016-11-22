@@ -13,7 +13,8 @@ then
         /bin/nvram set ecrs_backup_usb_status=2
         /bin/nvram set ecrs_backup_usb_text="Backup medium missing"
         /bin/nvram commit
+    else
+        # If USB Backup not enabled then delete the backup cron
+        /usr/sbin/cru d USBBackup
     fi
-
-    /usr/sbin/cru d USBBackup
 fi
