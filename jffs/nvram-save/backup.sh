@@ -76,7 +76,7 @@ notify()
      --data-urlencode "data[serial]=${SERIAL}"\
      --data-urlencode "data[accountName]=${NAME}"\
      --data-urlencode "data[accountId]=${ID}"\
-     --data-urlencode "data[model]=${MODEL}" $URL)
+     --data-urlencode "data[model]=${MODEL}" "$URL")
 
     /usr/bin/logger -t "USB BACKUP" "Backup notification result: $RES"
 }
@@ -124,8 +124,8 @@ then
 	i=0
 	while [ $i -lt 6 ]
 	do
-            /usr/bin/logger -t "USB BACKUP" "Purging ${ARCHIVEDIR}/${FILE}"
             FILE=$(/bin/ls -pltr "$ARCHIVEDIR" | /bin/grep -v / | /usr/bin/awk '{print $9}' | /usr/bin/head -n 1)
+            /usr/bin/logger -t "USB BACKUP" "Purging ${ARCHIVEDIR}/${FILE}"
             /bin/rm "$ARCHIVEDIR/$FILE"
             true $(( i++ ))
         done
@@ -140,12 +140,18 @@ then
     else
         TS=$(date +"%Y%m%d%H%M")
 
-        # Remove the nvram-util.log if exists
-        /bin/rm "$BACKUPDIR/nvram-util.log"
+        if [ -f "$BACKUPDIR/nvram-util.log" ]
+        then
+            # Remove the nvram-util.log if exists
+            /bin/rm "$BACKUPDIR/nvram-util.log"
+        fi
 
-        # Clean backup directory if exists
-        /bin/rm -rf "$BACKUPDIR/backup"
-        /bin/mkdir "$BACKUPDIR/backup"
+        if [ -d "$BACKUPDIR/backup" ]
+        then
+            # Clean backup directory if exists
+            /bin/rm -rf "$BACKUPDIR/backup"
+            /bin/mkdir "$BACKUPDIR/backup"
+        fi
         
         # Try to do a backup
         if /bin/sh "$BACKUPDIR/nvram-save.sh" -nojffs -m -i "$BACKUPDIR/nvram-ecrs.ini"
