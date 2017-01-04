@@ -1,6 +1,6 @@
---- /home/asus/asuswrt-merlin/release/ecrs/router/rom/original/Makefile	2016-11-07 12:28:24.511514828 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/rom/mods/Makefile	2016-11-16 12:53:33.849213592 -0500
-@@ -175,3 +175,11 @@
+--- /home/asus/asuswrt-merlin/release/src/router/rom/Makefile	2017-01-03 15:41:08.258608576 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/rom/mods/Makefile	2017-01-03 15:32:36.878597073 -0500
+@@ -192,3 +192,11 @@
  
  	install -m 0755 webs_scripts/GoogleDNS_Update.sh $(INSTALLDIR)/usr/sbin
  

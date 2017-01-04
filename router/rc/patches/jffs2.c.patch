@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/ecrs/router/rc/original/jffs2.c	2016-11-03 09:05:06.152708000 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/jffs2.c	2016-11-16 16:53:07.537212334 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/rc/jffs2.c	2017-01-03 15:41:07.846608576 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/jffs2.c	2017-01-03 15:31:01.474608996 -0500
 @@ -316,6 +316,23 @@
  
  	if (!check_if_dir_exist("/jffs/scripts/")) mkdir("/jffs/scripts/", 0755);

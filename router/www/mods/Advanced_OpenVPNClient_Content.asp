@@ -601,6 +601,11 @@ function ovpnFileChecker(){
 				if(vpn_upload_state == "init"){
 					setTimeout("ovpnFileChecker();",1000);
 				}
+				else if(vpn_upload_state > 0){
+					document.getElementById("importOvpnFile").innerHTML = "Failed!";
+					alert("Error " + vpn_upload_state +" while importing file - invalid key and/or certificate!\nFix your config file, then import it again.");
+					setTimeout("location.href='Advanced_OpenVPNClient_Content.asp';", 3000);
+				}
 				else{
 					setTimeout("location.href='Advanced_OpenVPNClient_Content.asp';", 3000);
 				}
@@ -1132,7 +1137,7 @@ function defaultSettings() {
 					<tr id="client_password">
 						<th>Password</th>
 						<td>
-							<input type="password" maxlength="255" class="input_25_table" name="vpn_client_password" value="<% nvram_get("vpn_client_password"); %>">
+							<input type="password" autocomplete="new-password" maxlength="255" class="input_25_table" name="vpn_client_password" value="<% nvram_get("vpn_client_password"); %>">
 							<input type="checkbox" name="show_pass_1" onclick="pass_checked(document.form.vpn_client_password)"><#QIS_show_pass#>
 						</td>
 					</tr>

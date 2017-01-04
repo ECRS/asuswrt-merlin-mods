@@ -1,6 +1,6 @@
---- /home/asus/asuswrt-merlin/release/ecrs/router/rc/original/firewall.c	2016-11-03 09:11:19.848707996 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/firewall.c	2016-11-08 12:05:29.408095041 -0500
-@@ -1244,6 +1244,12 @@
+--- /home/asus/asuswrt-merlin/release/src/router/rc/firewall.c	2017-01-03 15:41:07.842608576 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/firewall.c	2017-01-03 15:29:47.566607494 -0500
+@@ -1301,6 +1301,12 @@
  	}
  #endif
  
@@ -13,7 +13,7 @@
  #ifdef RTCONFIG_YANDEXDNS
  	if (nvram_get_int("yadns_enable_x"))
  		write_yandexdns_filter(fp, lan_if, lan_ip);
-@@ -1524,6 +1530,12 @@
+@@ -1601,6 +1607,12 @@
  
  	}
  

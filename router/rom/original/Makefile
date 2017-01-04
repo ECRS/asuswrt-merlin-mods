@@ -88,6 +88,18 @@ ifeq ($(RTCONFIG_DSL),y)
 	cp -f webs_scripts/notif_update.sh $(INSTALLDIR)/usr/sbin/notif_update.sh
 endif
 	#install -m 0755 webs_scripts/*.sh $(INSTALLDIR)/usr/sbin
+
+ifeq ($(RTCONFIG_MERLINUPDATE),y)
+	cp -f webs_scripts/merlin_webs_update.sh $(INSTALLDIR)/usr/sbin/webs_update.sh
+ifeq ($(RTCONFIG_BWDPI),y)
+	cp -f webs_scripts/sig_upgrade.sh $(INSTALLDIR)/usr/sbin/sig_upgrade.sh
+	cp -f webs_scripts/sig_update.sh $(INSTALLDIR)/usr/sbin/sig_update.sh
+endif
+ifeq ($(RTCONFIG_HTTPS),y)
+	cp -f webs_scripts/public.pem $(INSTALLDIR)/usr/sbin/public.pem
+endif
+
+else	#merlinupdate
 ifeq ($(RTCONFIG_AUTOLIVEUPDATE_ZIP),y)
 	cp -f webs_scripts/zip_webs_upgrade.sh $(INSTALLDIR)/usr/sbin/webs_upgrade.sh
 	cp -f webs_scripts/zip_webs_update.sh $(INSTALLDIR)/usr/sbin/webs_update.sh
@@ -98,7 +110,7 @@ endif
 ifeq ($(RTCONFIG_HTTPS),y)
 	cp -f webs_scripts/public.pem $(INSTALLDIR)/usr/sbin/public.pem
 endif
-else
+else # autoliveupdate_zip
 ifeq ($(RTCONFIG_HTTPS),y)
 	cp -f webs_scripts/ssl_webs_upgrade.sh $(INSTALLDIR)/usr/sbin/webs_upgrade.sh
 else
@@ -118,10 +130,11 @@ endif
 ifeq ($(RTCONFIG_HTTPS),y)
 	cp -f webs_scripts/public.pem $(INSTALLDIR)/usr/sbin/public.pem
 endif
-endif
+endif	#autoliveupdate_zip
+endif	#merlinupdate
 
 #	Used by Curl
-	cp -f others/ca-bundle.crt $(INSTALLDIR)/rom/ca-bundle.crt
+	cp -f --preserve=timestamps others/ca-bundle.crt $(INSTALLDIR)/rom/ca-bundle.crt
 
 ifeq ($(RTCONFIG_OPENVPN),y)
 	cp -f others/dh2048.pem	 $(INSTALLDIR)/rom/dh2048.pem
@@ -136,6 +149,10 @@ ifeq ($(RTCONFIG_HTTPS),y)
 	sed 's/#.*//g;s/[ \t]\+/ /g;s/^[ \t]*//;s/[ \t]*$$//;/^$$/d' < rom/etc/openssl.cnf > $(INSTALLDIR)/rom/etc/openssl.cnf
 else
 	rm -f $(INSTALLDIR)/rom/etc/openssl.cnf
+endif
+
+ifneq ($(RTCONFIG_BCMARM),y)
+	rm -f $(INSTALLDIR)/rom/etc/modprobe.conf
 endif
 
 ifeq ($(RTCONFIG_RALINK_RT3883),y)

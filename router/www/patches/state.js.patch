@@ -1,6 +1,6 @@
---- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/state.js	2016-10-31 10:22:48.785645510 -0400
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2016-11-16 16:17:54.941213969 -0500
-@@ -313,7 +313,7 @@
+--- /home/asus/asuswrt-merlin/release/src/router/www/state.js	2017-01-03 15:41:07.562608576 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2017-01-03 15:21:39.278608383 -0500
+@@ -314,7 +314,7 @@
  var dualWAN_support = isSupport("dualwan");
  var ruisp_support = isSupport("ruisp");
  var ssh_support = isSupport("ssh");
@@ -9,7 +9,7 @@
  var multissid_support = isSupport("mssid");
  var no5gmssid_support = rc_support.search("no5gmssid");
  var no5gmssid_support = isSupport("no5gmssid");
-@@ -459,7 +459,7 @@
+@@ -460,7 +460,7 @@
  var gn_array_5g_2 = <% wl_get_guestnetwork("2"); %>;
  
  //notification value
@@ -18,43 +18,16 @@
  if(notice_pw_is_default == 1 && window.location.pathname.toUpperCase().search("QIS_") < 0)	//force to change http_passwd / http_username & except QIS settings
  		location.href = 'Main_Password.asp?nextPage=' + window.location.pathname.substring(1 ,window.location.pathname.length);
  var noti_auth_mode_2g = '<% nvram_get("wl0_auth_mode_x"); %>';
-@@ -652,7 +652,7 @@
+@@ -653,7 +653,7 @@
  
  	banner_code +='<div id="banner1" class="banner1" align="center"><img src="images/New_ui/asustitle.png" width="218" height="54" align="left">\n';
  	banner_code +='<div style="margin-top:13px;margin-left:-90px;*margin-top:0px;*margin-left:0px;" align="center"><span id="modelName_top" onclick="this.focus();" class="modelName_top"><#Web_Title2#></span></div>';
 -	banner_code +='<div style="margin-left:25px;width:160px;margin-top:0px;float:left;" align="left"><span><a href="http://asuswrt.lostrealm.ca/" target="_blank"><img src="images/merlin-logo.png" style="border: 0;"></span></div>';
-+banner_code +='<div style="margin-left:25px;width:160px;margin-top:5px;float:left;" align="left"><span><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></span></div>';
++	banner_code +='<div style="margin-left:25px;width:160px;margin-top:5px;float:left;" align="left"><span><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></span></div>';
  
  	// logout, reboot
  	banner_code +='<a href="javascript:logout();"><div style="margin-top:13px;margin-left:25px; *width:136px;" class="titlebtn" align="center"><span><#t1Logout#></span></div></a>\n';
-@@ -816,8 +816,9 @@
- }
- 
- function show_app_table(evt){
-+var evtTarget = evt.target || evtTarget;
- 	var target = document.getElementById("app_link_table");
--	if(evt.srcElement.id == "app_icon" || evt.srcElement.id == "cancel_app"){
-+	if(evtTarget.id == "app_icon" || evtTarget.id == "cancel_app"){
- 		if(target.style.display == "none"){
- 			target.style.display = "";		
- 		}
-@@ -825,13 +826,13 @@
- 			target.style.display = "none";
- 		}				
- 	}
--	else if(evt.srcElement.offsetParent == null){
-+	else if(evtTarget.offsetParent == null){
- 		if(target.style.display == ""){
- 			target.style.display = "none";
- 		}			
- 		
- 	}
--	else if((evt.srcElement.id != "null" && evt.srcElement.id == "app_link_table") || (evt.srcElement.offsetParent.id != "null" && evt.srcElement.offsetParent.id) == "app_link_table"){	
-+	else if((evtTarget.id != "null" && evtTarget.id == "app_link_table") || (evtTarget.offsetParent.id != "null" && evtTarget.offsetParent.id) == "app_link_table"){	
- 		return true;
- 	}
- 	else{
-@@ -1751,7 +1752,40 @@
+@@ -1761,7 +1761,40 @@
  			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=wireless\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
  		else
  			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=detect\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
@@ -96,7 +69,7 @@
  
  	// Feature
  	menu1_code += '<div class="m0_r" style="margin-top:10px;" id="option0"><table width="192px" height="37px"><tr><td><#menu5_1_1#></td></tr></table></div>\n';
-@@ -2356,13 +2390,12 @@
+@@ -2376,13 +2409,12 @@
  
  	// FAQ searching bar{
  	footer_code += '<div style="margin-top:-75px;margin-left:205px;"><table width="765px" border="0" align="center" cellpadding="0" cellspacing="0"><tr>';

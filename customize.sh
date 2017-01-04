@@ -8,27 +8,6 @@ ROOT=$RELEASE/src-rt-6.x
 
 
 
-# Add copying of ECRS boot-time scripts to the image. This code is not run
-# until after the scripts have been copied into router/rom/scripts dir.
-#PATH=$ROOT/router/rom
-#cd $PATH
-#PATH=$ROOT/router/rom/Makefile
-#/usr/bin/git checkout -- $PATH
-#if ! /bin/grep --quiet "ECRS mod to load prebuilt configs and scripts" $PATH
-#then
-#    echo -e "#\tECRS mod to load prebuilt scripts" >> $PATH
-#    echo -e "\techo -e \"Adding default configs and scripts to rom\"" >> $PATH
-#    echo -e "\tmkdir -p \$(INSTALLDIR)/rom/configs" >> $PATH
-#    echo -e "\tmkdir -p \$(INSTALLDIR)/rom/scripts" >> $PATH
-#    echo -e "\tcp -rfv configs/* \$(INSTALLDIR)/rom/configs" >> $PATH
-#    echo -e "\tcp -rfv scripts/* \$(INSTALLDIR)/rom/scripts" >> $PATH
-#    echo -e "\tfind \$(INSTALLDIR)/rom -name \"*\"" >> $PATH
-#fi
-#cd $ECRS
-
-
-
-
 # Create and apply all router patches
 for D in `/usr/bin/find router -maxdepth 1 -type d | /usr/bin/tail -n +2`
 do
@@ -38,13 +17,14 @@ do
     MODSPATH=$ECRS/router/$DIRNAME/mods
     PATCHPATH=$ECRS/router/$DIRNAME/patches
 
-    cd $DIRPATH
+    pushd $DIRPATH
     /usr/bin/git checkout -- .
+    popd
 
     for f in $ORIGPATH/*
     do
         FILE=`/usr/bin/basename $f`
-        /usr/bin/diff --unified $f $MODSPATH/$FILE > $PATCHPATH/$FILE.patch
+        /usr/bin/diff --unified "$DIRPATH/$FILE" "$MODSPATH/$FILE" > "$PATCHPATH/$FILE.patch"
     done
 
     for f in $PATCHPATH/*.patch

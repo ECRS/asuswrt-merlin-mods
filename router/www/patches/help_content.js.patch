@@ -1,10 +1,10 @@
---- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/help_content.js	2016-11-15 09:59:31.166176250 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/help_content.js	2016-11-15 10:01:20.306154947 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/help_content.js	2017-01-03 15:41:07.562608576 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/help_content.js	2017-01-03 15:14:57.150609222 -0500
 @@ -163,6 +163,7 @@
  							"This feature allows browser to redirect to failed connection warning page when Internet is down, if disabled warning page would not appear.",	/* untranslated */
  							"To set your clock forward one hour in the spring when DST (Daylight Saving Time) starts",	/* untranslated */
  							"To set your clock back one hour in the fall when DST (Daylight Saving Time) ends"	/* untranslated */
-+							, "<#ECRS_Backup_USB_itemdesc#>"
+++							, "<#ECRS_Backup_USB_itemdesc#>"
  		);
  //Log
  helpcontent[12] = new Array("",

@@ -183,6 +183,7 @@ var qos_enable_flag = ('<% nvram_get("qos_enable"); %>' == 1) ? true : false;
 var bwdpi_app_rulelist = "<% nvram_get("bwdpi_app_rulelist"); %>".replace(/&#60/g, "<");
 var qos_type_flag = "<% nvram_get("qos_type"); %>";
 var exist_firmver="<% nvram_get("firmver"); %>";
+var exist_extendno = '<% nvram_get("extendno"); %>';
 
 //territory_code sku
 function in_territory_code(_ptn){
@@ -293,7 +294,7 @@ var nfsd_support = isSupport("nfsd");
 var wifilogo_support = isSupport("WIFI_LOGO"); 
 var band2g_support = isSupport("2.4G"); 
 var band5g_support = isSupport("5G");
-var live_update_support = false;	// isSupport("update"); 
+var live_update_support = isSupport("update");
 var cooler_support = isSupport("fanctrl");
 var power_support = isSupport("pwrctrl");
 if(is_US_sku)
@@ -416,14 +417,14 @@ var sdk_7 = sdk_version_array[0] == 7 ? true : false;
 var bcm_mumimo_support = isSupport("mumimo");		//Broadcom MU-MIMOs
 
 if(live_update_support){
-	if(exist_firmver[0] == 9)
+	if((exist_extendno.indexOf("beta") != -1) || (exist_extendno.indexOf("alpha") != -1))
 		var current_firmware_path = 1;
 	else
-		var current_firmware_path = 0;	
-}	
+		var current_firmware_path = 0;
+}
 else{
 	var current_firmware_path = 0;
-}	
+}
 
 // Todo: Support repeater mode
 /*if(isMobile() && sw_mode != 2 && !dsl_support)
@@ -652,7 +653,7 @@ function show_banner(L3){// L3 = The third Level of Menu
 
 	banner_code +='<div id="banner1" class="banner1" align="center"><img src="images/New_ui/asustitle.png" width="218" height="54" align="left">\n';
 	banner_code +='<div style="margin-top:13px;margin-left:-90px;*margin-top:0px;*margin-left:0px;" align="center"><span id="modelName_top" onclick="this.focus();" class="modelName_top"><#Web_Title2#></span></div>';
-banner_code +='<div style="margin-left:25px;width:160px;margin-top:5px;float:left;" align="left"><span><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></span></div>';
+	banner_code +='<div style="margin-left:25px;width:160px;margin-top:5px;float:left;" align="left"><span><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></span></div>';
 
 	// logout, reboot
 	banner_code +='<a href="javascript:logout();"><div style="margin-top:13px;margin-left:25px; *width:136px;" class="titlebtn" align="center"><span><#t1Logout#></span></div></a>\n';
@@ -816,9 +817,11 @@ banner_code +='<div style="margin-left:25px;width:160px;margin-top:5px;float:lef
 }
 
 function show_app_table(evt){
-var evtTarget = evt.target || evtTarget;
+	
 	var target = document.getElementById("app_link_table");
-	if(evtTarget.id == "app_icon" || evtTarget.id == "cancel_app"){
+        var evt_target = evt.target || evt.srcElement;  //evt.target for Firefox patched
+	
+	if(evt_target.id == "app_icon" || evt_target.id == "cancel_app"){
 		if(target.style.display == "none"){
 			target.style.display = "";		
 		}
@@ -826,13 +829,13 @@ var evtTarget = evt.target || evtTarget;
 			target.style.display = "none";
 		}				
 	}
-	else if(evtTarget.offsetParent == null){
+	else if(evt_target.offsetParent == null){
 		if(target.style.display == ""){
 			target.style.display = "none";
 		}			
 		
 	}
-	else if((evtTarget.id != "null" && evtTarget.id == "app_link_table") || (evtTarget.offsetParent.id != "null" && evtTarget.offsetParent.id) == "app_link_table"){	
+	else if((evt_target.id != "null" && evt_target.id == "app_link_table") || (evt_target.offsetParent.id != "null" && evt_target.offsetParent.id) == "app_link_table"){	
 		return true;
 	}
 	else{
@@ -918,7 +921,7 @@ tabtitle[8] = new Array("", "<#menu5_6_1#>", "<#menu5_6_2#>", "<#menu5_6_3#>", "
 tabtitle[9] = new Array("", "<#menu5_7_2#>", "<#menu5_7_4#>", "<#menu5_7_3#>", "IPv6", "<#menu5_7_6#>", "<#menu5_7_5#>", "<#menu_dsl_log#>", "<#Connections#>");
 tabtitle[10] = new Array("", "<#Network_Analysis#>", "Netstat", "<#NetworkTools_WOL#>", "SMTP Client", "<#smart_connect_rule#>");
 if(bwdpi_support){
-	tabtitle[11] = new Array("", "<#Bandwidth_monitor#>", "<#menu5_3_2#>", "<#Adaptive_History#>", "<table style='margin-top:-10px \\9;'><tr><td><img src='/images/ROG_Logo.png' style='border:0px;width:32px;'></td><td>ROG First</td></tr></table>", "Spectrum");
+	tabtitle[11] = new Array("", "<#Bandwidth_monitor#>", "<#menu5_3_2#>", "QoS Statistics", "<#Adaptive_History#>", "<table style='margin-top:-10px \\9;'><tr><td><img src='/images/ROG_Logo.png' style='border:0px;width:32px;'></td><td>ROG First</td></tr></table>", "Spectrum");
 	tabtitle[12] = new Array("", "<#AiProtection_Home#>", "<#Parental_Control#>", "Ad Blocking", "Key Guard", "DNS Filtering");
 	tabtitle[13] = new Array("", "Time Limits", "<#AiProtection_filter#>");
 	if(traffic_limiter_support)
@@ -929,9 +932,9 @@ if(bwdpi_support){
 }
 else{
 	if(traffic_limiter_support)
-		tabtitle[11] = new Array("", "<#menu5_3_2#>", "<#traffic_monitor#>", "<table style='margin-top:-10px \\9;'><tr><td><img src='/images/ROG_Logo.png' style='border:0px;width:32px;'></td><td>ROG First</td></tr></table>", "Spectrum", "Traffic Limiter");
+		tabtitle[11] = new Array("", "<#menu5_3_2#>", "QoS Statistics", "<#traffic_monitor#>", "<table style='margin-top:-10px \\9;'><tr><td><img src='/images/ROG_Logo.png' style='border:0px;width:32px;'></td><td>ROG First</td></tr></table>", "Spectrum", "Traffic Limiter");
 	else
-		tabtitle[11] = new Array("", "<#menu5_3_2#>", "<#traffic_monitor#>", "<table style='margin-top:-10px \\9;'><tr><td><img src='/images/ROG_Logo.png' style='border:0px;width:32px;'></td><td>ROG First</td></tr></table>", "Spectrum");
+		tabtitle[11] = new Array("", "<#menu5_3_2#>", "QoS Statistics", "<#traffic_monitor#>", "<table style='margin-top:-10px \\9;'><tr><td><img src='/images/ROG_Logo.png' style='border:0px;width:32px;'></td><td>ROG First</td></tr></table>", "Spectrum");
 	tabtitle[12] = new Array("", "<#Parental_Control#>", "<#YandexDNS#>", "DNS Filtering");
 	tabtitle[13] = new Array("");
 	tabtitle[14] = new Array("");
@@ -951,7 +954,7 @@ tablink[8] = new Array("", "Advanced_OperationMode_Content.asp", "Advanced_Syste
 tablink[9] = new Array("", "Main_LogStatus_Content.asp", "Main_WStatus_Content.asp", "Main_DHCPStatus_Content.asp", "Main_IPV6Status_Content.asp", "Main_RouteStatus_Content.asp", "Main_IPTStatus_Content.asp", "Main_AdslStatus_Content.asp", "Main_ConnStatus_Content.asp");
 tablink[10] = new Array("", "Main_Analysis_Content.asp", "Main_Netstat_Content.asp", "Main_WOL_Content.asp", "SMTP_Client.asp", "Advanced_Smart_Connect.asp");
 if(bwdpi_support){
-	tablink[11] = new Array("", "AdaptiveQoS_Bandwidth_Monitor.asp", "QoS_EZQoS.asp", "AdaptiveQoS_WebHistory.asp", "AdaptiveQoS_ROG.asp", "Main_Spectrum_Content.asp", "Advanced_QOSUserPrio_Content.asp", "Advanced_QOSUserRules_Content.asp", "AdaptiveQoS_Adaptive.asp", "Bandwidth_Limiter.asp");
+	tablink[11] = new Array("", "AdaptiveQoS_Bandwidth_Monitor.asp", "QoS_EZQoS.asp", "QoS_Stats.asp", "AdaptiveQoS_WebHistory.asp", "AdaptiveQoS_ROG.asp", "Main_Spectrum_Content.asp", "Advanced_QOSUserPrio_Content.asp", "Advanced_QOSUserRules_Content.asp", "AdaptiveQoS_Adaptive.asp", "Bandwidth_Limiter.asp");
 	tablink[12] = new Array("", "AiProtection_HomeProtection.asp", "AiProtection_WebProtector.asp", "AiProtection_AdBlock.asp", "AiProtection_Key_Guard.asp", "DNSFilter.asp");
 	tablink[13] = new Array("");
 	if(traffic_limiter_support)
@@ -960,9 +963,9 @@ if(bwdpi_support){
 	        tablink[14] = new Array("", "Main_TrafficMonitor_realtime.asp", "TrafficAnalyzer_Statistic.asp", "Main_TrafficMonitor_last24.asp", "Main_TrafficMonitor_daily.asp", "Main_TrafficMonitor_monthly.asp", "Main_TrafficMonitor_devrealtime.asp", "Main_TrafficMonitor_devdaily.asp", "Main_TrafficMonitor_devmonthly.asp");
 }else{
 	if(traffic_limiter_support)
-		tablink[11] = new Array("", "QoS_EZQoS.asp", "Main_TrafficMonitor_realtime.asp", "AdaptiveQoS_ROG.asp", "Main_Spectrum_Content.asp", "AdaptiveQoS_TrafficLimiter.asp", "Main_TrafficMonitor_last24.asp", "Main_TrafficMonitor_daily.asp", "Main_TrafficMonitor_monthly.asp", "Main_TrafficMonitor_devrealtime.asp", "Main_TrafficMonitor_devdaily.asp", "Main_TrafficMonitor_devmonthly.asp", "Advanced_QOSUserPrio_Content.asp", "Advanced_QOSUserRules_Content.asp", "Bandwidth_Limiter.asp");
+		tablink[11] = new Array("", "QoS_EZQoS.asp", "QoS_Stats.asp", "Main_TrafficMonitor_realtime.asp", "AdaptiveQoS_ROG.asp", "Main_Spectrum_Content.asp", "AdaptiveQoS_TrafficLimiter.asp", "Main_TrafficMonitor_last24.asp", "Main_TrafficMonitor_daily.asp", "Main_TrafficMonitor_monthly.asp", "Main_TrafficMonitor_devrealtime.asp", "Main_TrafficMonitor_devdaily.asp", "Main_TrafficMonitor_devmonthly.asp", "Advanced_QOSUserPrio_Content.asp", "Advanced_QOSUserRules_Content.asp", "Bandwidth_Limiter.asp");
 	else
-                tablink[11] = new Array("", "QoS_EZQoS.asp", "Main_TrafficMonitor_realtime.asp", "AdaptiveQoS_ROG.asp", "Main_Spectrum_Content.asp", "Main_TrafficMonitor_last24.asp", "Main_TrafficMonitor_daily.asp", "Main_TrafficMonitor_monthly.asp", "Main_TrafficMonitor_devrealtime.asp", "Main_TrafficMonitor_devdaily.asp", "Main_TrafficMonitor_devmonthly.asp", "Advanced_QOSUserPrio_Content.asp", "Advanced_QOSUserRules_Content.asp", "Bandwidth_Limiter.asp");
+                tablink[11] = new Array("", "QoS_EZQoS.asp", "QoS_Stats.asp", "Main_TrafficMonitor_realtime.asp", "AdaptiveQoS_ROG.asp", "Main_Spectrum_Content.asp", "Main_TrafficMonitor_last24.asp", "Main_TrafficMonitor_daily.asp", "Main_TrafficMonitor_monthly.asp", "Main_TrafficMonitor_devrealtime.asp", "Main_TrafficMonitor_devdaily.asp", "Main_TrafficMonitor_devmonthly.asp", "Advanced_QOSUserPrio_Content.asp", "Advanced_QOSUserRules_Content.asp", "Bandwidth_Limiter.asp");
 	tablink[12] = new Array("", "ParentalControl.asp", "YandexDNS.asp", "DNSFilter.asp");
 	tablink[13] = new Array("");
 	tablink[14] = new Array("");
@@ -1526,7 +1529,7 @@ function show_menu(){
 		else if(current_url.indexOf("AdaptiveQoS_WebHistory") == 0){
 			L1 = traffic_L1_dx; 
 			L2 = traffic_L2_dx; 
-			L3 = 3;
+			L3 = 4;
 		}
 		else if(current_url.indexOf("Main_TrafficMonitor_") == 0){
 			L1 = traffic_L1_dx; 
@@ -1538,7 +1541,7 @@ function show_menu(){
 					L3 = 4;
 			}
 			else{
-				L3 = 2;
+				L3 = 3;
 			}
 			
 			if(based_modelid == "RT-AC68A"){	//MODELDEP : Spec special fine tune
@@ -1575,7 +1578,13 @@ function show_menu(){
 		else if(current_url.indexOf("Tools_") == 0){
 			L3 = 1;
 		}
-
+		else if(current_url.indexOf("QoS_Stats") == 0) {
+			if(bwdpi_support){
+				L3 = 3;
+			} else {
+				L3 = 2;
+			}
+		}
 		else{
 			L1 = traffic_L1_dx; 
 			L2 = traffic_L2_dx; 
@@ -1869,15 +1878,15 @@ function show_menu(){
 		notification.clickCallBack[0] = "location.href = 'Advanced_System_Content.asp?af=http_passwd2';";	
 	}else
 		notification.acpw = 0;
-/*
-	if(isNewFW('<% nvram_get("webs_state_info"); %>', 0, current_firmware_path) && exist_firmver[0] != 9){	//case2		//beta FW to disable notification case 2
+
+	if(isNewFW('<% nvram_get("webs_state_info"); %>', 0, current_firmware_path) /*&& (current_firmware_path != 1)*/){	//case2		//beta FW to disable notification case 2
 		notification.array[1] = 'noti_upgrade';
 		notification.upgrade = 1;
 		notification.desc[1] = '<#ASUSGATE_note2#>';
 		notification.action_desc[1] = '<#ASUSGATE_act_update#>';
 		notification.clickCallBack[1] = "location.href = 'Advanced_FirmwareUpgrade_Content.asp?confirm_show=1';"
 	}else
-*/
+
 		notification.upgrade = 0;
 	
 	if(band2g_support && sw_mode != 4 && noti_auth_mode_2g == 'open'){ //case3-1
@@ -2002,6 +2011,16 @@ function show_menu(){
 		}
 	}
 
+	// Low NVRAM
+	if((<% sysinfo("nvram.total"); %> - <% sysinfo("nvram.used"); %>) < 3000){
+		notification.array[17] = 'noti_low_nvram';
+		notification.low_nvram = 1;
+		notification.desc[17] = "Your router is running low on free NVRAM, which might affect its stability.<br>Review nvram-intensive settings such as OpenVPN, or consider doing a factory default reset and reconfiguring.";
+		notification.action_desc[17] = "Review System Information now";
+		notification.clickCallBack[17] = "location.href = 'Tools_Sysinfo.asp';"
+	}else
+		notification.low_nvram = 0;
+
 	/*if(is_TW_sku && wan_proto == "pppoe" && is_CHT_pppoe && !is_CHT_pppoe_static){
 		notification.pppoe_tw_static = 1;
 		notification.array[17] = 'noti_pppoe_tw_static';
@@ -2018,7 +2037,7 @@ function show_menu(){
 		notification.clickCallBack[15] = "location.href = 'Advanced_WAN_Content.asp?af=wan_proto'";			
 	}
 	
-	if( notification.acpw || notification.upgrade || notification.wifi_2g || notification.wifi_5g || notification.ftp || notification.samba || notification.loss_sync || notification.experience_FB || notification.notif_hint || notification.send_debug_log || notification.mobile_traffic || notification.sim_record || notification.external_ip || notification.pppoe_tw || notification.pppoe_tw_static || notification.ie_legacy){
+	if( notification.acpw || notification.upgrade || notification.wifi_2g || notification.wifi_5g || notification.ftp || notification.samba || notification.loss_sync || notification.experience_FB || notification.notif_hint || notification.send_debug_log || notification.mobile_traffic || notification.sim_record || notification.external_ip || notification.pppoe_tw || notification.pppoe_tw_static || notification.ie_legacy || notification.low_nvram){
 		notification.stat = "on";
 		notification.flash = "on";
 		notification.run();
@@ -4030,6 +4049,7 @@ function refreshStatus(xhr){
 	}
 	else if(notification.stat == "on" && !notification.mobile_traffic && !notification.sim_record && !notification.external_ip && !notification.upgrade && !notification.wifi_2g && 
 			!notification.wifi_5g && !notification.ftp && !notification.samba && !notification.loss_sync && !notification.experience_FB && !notification.notif_hint && !notification.mobile_traffic && 
+			!notification.low_nvram &&
 			!notification.send_debug_log && !notification.pppoe_tw && !notification.pppoe_tw_static && !notification.ie_legacy){
 		cookie.unset("notification_history");
 		clearInterval(notification.flashTimer);
@@ -4074,7 +4094,7 @@ var notification = {
 	ie_legacy: 0,
 	notiClick: function(){
 		// stop flashing after the event is checked.
-		cookie.set("notification_history", [notification.upgrade, notification.wifi_2g ,notification.wifi_5g ,notification.ftp ,notification.samba ,notification.loss_sync ,notification.experience_FB ,notification.notif_hint, notification.mobile_traffic, notification.send_debug_log, notification.sim_record, notification.external_ip, notification.pppoe_tw, notification.pppoe_tw_static, notification.ie_legacy].join(), 1000);
+		cookie.set("notification_history", [notification.upgrade, notification.wifi_2g ,notification.wifi_5g ,notification.ftp ,notification.samba ,notification.loss_sync ,notification.experience_FB ,notification.notif_hint, notification.mobile_traffic, notification.send_debug_log, notification.sim_record, notification.external_ip, notification.pppoe_tw, notification.pppoe_tw_static, notification.ie_legacy, notification.low_nvram].join(), 1000);
 		clearInterval(notification.flashTimer);
 		document.getElementById("notification_status").className = "notification_on";
 		if(notification.clicking == 0){
@@ -4138,7 +4158,7 @@ var notification = {
 			tarObj1.className = "notification_on1";
 		}
 
-		if(this.flash == "on" && cookie.get("notification_history") != [notification.upgrade, notification.wifi_2g ,notification.wifi_5g ,notification.ftp ,notification.samba ,notification.loss_sync ,notification.experience_FB ,notification.notif_hint, notification.mobile_traffic, notification.send_debug_log, notification.sim_record, notification.external_ip, notification.pppoe_tw, notification.pppoe_tw_static, notification.ie_legacy].join()){
+		if(this.flash == "on" && cookie.get("notification_history") != [notification.upgrade, notification.wifi_2g ,notification.wifi_5g ,notification.ftp ,notification.samba ,notification.loss_sync ,notification.experience_FB ,notification.notif_hint, notification.mobile_traffic, notification.send_debug_log, notification.sim_record, notification.external_ip, notification.pppoe_tw, notification.pppoe_tw_static, notification.ie_legacy, notification.low_nvram].join()){
 			notification.flashTimer = setInterval(function(){
 				tarObj.className = (tarObj.className == "notification_on") ? "notification_off" : "notification_on";
 			}, 1000);
@@ -4383,24 +4403,24 @@ function decodeURIComponentSafe(_ascii){
 }
 
 var isNewFW = function(FWVer, check_path, current_path){	//path> 0:stable, 1:beta
-	if(check_path != current_path){
+/*
+	if((check_path == 0) && (current_path == 1)){	// If going from beta FW to latest stable
 		if(FWVer.length < 5)	//length should be longer than 17 (e.g. 3004_380_0-g123456) 
 			return false;
 		else
 			return true;	// suppose new fw on stable path if current_path is beta path.
 	}
 	else{
-			
+*/
 			var Latest_firmver = FWVer.split("_");			
 			// 3004_999_2262-g260cdd9
 			if(typeof Latest_firmver[0] !== "undefined" && typeof Latest_firmver[1] !== "undefined" && typeof Latest_firmver[2] !== "undefined"){
 				var Latest_firm = parseInt(Latest_firmver[0]);
 				var Latest_buildno = parseInt(Latest_firmver[1]);
-				var Latest_extendno = parseInt(Latest_firmver[2].split("-g")[0]);
-
+				var Latest_extendno = parseInt(Latest_firmver[2].split("-g")[0].replace(/^[0-9]$/,"10$&").replace(/alpha/gi,"1").replace(/beta/gi,"5"));
 				current_firm = parseInt('<% nvram_get("firmver"); %>'.replace(/[.]/gi,""));
-				current_buildno = parseInt('<% nvram_get("buildno"); %>');
-				current_extendno = parseInt('<% nvram_get("extendno"); %>'.split("-g")[0]);
+				current_buildno = parseInt('<% nvram_get("buildno"); %>'.replace(/[.]/gi,""));
+				current_extendno = parseInt('<% nvram_get("extendno"); %>'.split("-g")[0].replace(/^[0-9]$/,"10$&").replace(/alpha/gi,"1").replace(/beta/gi,"5"));
 				if((current_buildno < Latest_buildno) || 
 						(current_firm < Latest_firm && current_buildno == Latest_buildno) ||
 						(current_extendno < Latest_extendno && current_buildno == Latest_buildno && current_firm == Latest_firm))
@@ -4408,9 +4428,8 @@ var isNewFW = function(FWVer, check_path, current_path){	//path> 0:stable, 1:bet
 					return true;
 				}
 			}
-		
 		return false;
-	}
+/*	}*/
 }
 
 function getBrowser_info(){

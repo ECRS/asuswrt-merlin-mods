@@ -129,9 +129,9 @@ function initial(){
 		document.getElementById("telnet_tr").style.display = "";
 		document.form.telnetd_enable[0].disabled = false;
 		document.form.telnetd_enable[1].disabled = false;
-	}	
+	}
 
-        if (document.form.ecrs_myecrs_account_id.value != '')
+	if (document.form.ecrs_myecrs_account_id.value != '')
 	{
 		document.form.ecrs_myecrs_account_id.outerHTML = '<div>' + document.form.ecrs_myecrs_account_id.value + '</div>';
 	}
@@ -312,6 +312,7 @@ function validForm(){
 
 	/*if (!validator.range(document.form.http_lanport, 1, 65535))
 		return false;*/
+
 	if(reboot_schedule_support){		
 		if(!document.form.reboot_date_x_Sun.checked && !document.form.reboot_date_x_Mon.checked &&
 		!document.form.reboot_date_x_Tue.checked && !document.form.reboot_date_x_Wed.checked &&
@@ -880,7 +881,7 @@ function paste_password(){
 					<td><input type="text" maxlength="15" class="input_15_table" name="log_ipaddr" value="<% nvram_get("log_ipaddr"); %>" onKeyPress="return validator.isIPAddr(this, event)" autocorrect="off" autocapitalize="off"></td>
 				</tr>
 				<tr>
-					<th>Default message log level</th>
+					<th><a class="hintstyle" href="javascript:void(0);" onClick="openHint(50,11);">Default message log level</a></th>
 					<td>
 						<select name="message_loglevel" class="input_option">
 							<option value="0" <% nvram_match("message_loglevel", "0", "selected"); %>>emergency</option>
@@ -895,7 +896,7 @@ function paste_password(){
 					</td>
 				</tr>
 				<tr>
-					<th>Log only messages more urgent than</th>
+					<th><a class="hintstyle" href="javascript:void(0);" onClick="openHint(50,12);">Log only messages more urgent than</a></th>
 					<td>
 						<select name="log_level" class="input_option">
 							<option value="1" <% nvram_match("log_level", "1", "selected"); %>>alert</option>
@@ -1002,10 +1003,9 @@ function paste_password(){
 					</td>
 				</tr>
 			</table>
-
-                        <div class="apply_gen">
-                                <input name="button" type="button" class="button_gen" onclick="applyRule();" value="<#CTL_apply#>"/>
-                        </div>
+			<div class="apply_gen">
+				<input name="button" type="button" class="button_gen" onclick="applyRule();" value="<#CTL_apply#>"/>
+			</div>   
 		</td>
 	</tr>
 </tbody>

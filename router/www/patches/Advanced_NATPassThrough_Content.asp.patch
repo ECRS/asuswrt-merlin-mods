@@ -1,10 +1,10 @@
---- /home/asus/asuswrt-merlin/release/ecrs/router/www/original/Advanced_NATPassThrough_Content.asp	2016-11-08 09:30:35.263512033 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_NATPassThrough_Content.asp	2016-11-08 09:32:08.931511021 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_NATPassThrough_Content.asp	2017-01-03 15:41:07.558608576 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_NATPassThrough_Content.asp	2016-12-30 16:47:53.927168489 -0500
 @@ -118,17 +118,6 @@
  						</tr>
  
  						<tr>
--							<th><#NAT_SIP_Passthrough#></th>
+-							<th><a class="hintstyle" href="javascript:void(0);" onClick="openHint(50,14);"><#NAT_SIP_Passthrough#></a></th>
 -						<td>
 -												<select name="fw_pt_sip" class="input_option">
 -													<option class="content_input_fd" value="0" <% nvram_match("fw_pt_sip", "0","selected"); %>><#btn_disable#></option>
