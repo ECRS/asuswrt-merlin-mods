@@ -8,11 +8,11 @@ ARCHIVEDIR=/tmp/mnt/ASUS/archive
 # Fail function
 backupfail()
 {
-    FAILCOUNT=$(/bin/nvram get ecrs_backup_usb_failcount)
+    FAILCOUNT=$(/usr/sbin/nvram get ecrs_backup_usb_failcount)
     FAILCOUNT=$((FAILCOUNT+1))
     
-    /bin/nvram set ecrs_backup_usb_failcount=$FAILCOUNT
-    /bin/nvram set ecrs_backup_usb_status=1
+    /usr/sbin/nvram set ecrs_backup_usb_failcount=$FAILCOUNT
+    /usr/sbin/nvram set ecrs_backup_usb_status=1
 
     if [ "$1" -eq "1" ]
     then
@@ -31,9 +31,9 @@ backupfail()
     fi
 
     /usr/bin/logger -t "USB BACKUP" "Failed to create scheduled backup - $MSG"
-    /bin/nvram set ecrs_backup_usb_text="$MSG"
+    /usr/sbin/nvram set ecrs_backup_usb_text="$MSG"
     
-    /bin/nvram commit
+    /usr/sbin/nvram commit
     
     exit 1
 }
@@ -44,14 +44,14 @@ backupsuccess()
 {
     TS=$(date +"%B %d, %Y %r")
 
-    /bin/nvram set ecrs_backup_usb_status=0
-    /bin/nvram set ecrs_backup_usb_failcount=0
-    /bin/nvram set ecrs_backup_usb_notifycount=0
-    /bin/nvram set ecrs_backup_usb_text="Last run: $TS"
+    /usr/sbin/nvram set ecrs_backup_usb_status=0
+    /usr/sbin/nvram set ecrs_backup_usb_failcount=0
+    /usr/sbin/nvram set ecrs_backup_usb_notifycount=0
+    /usr/sbin/nvram set ecrs_backup_usb_text="Last run: $TS"
     
     /usr/bin/logger -t "USB BACKUP" "Successfully created scheduled backup - $ARCHIVEDIR/$1.tar.gz"
     
-    /bin/nvram commit
+    /usr/sbin/nvram commit
     
     exit 0
 }
@@ -62,13 +62,13 @@ notify()
 {
     /usr/bin/logger -t "USB BACKUP" "Sending backup notification"
 
-    URL="$(/bin/nvram get ecrs_backup_usb_notifyurl)"
-    SERIAL="$(/bin/nvram get ecrs_router_serial)"
-    NAME="$(/bin/nvram get ecrs_myecrs_account_name)"
-    ID="$(/bin/nvram get ecrs_myecrs_account_id)"
-    MODEL="$(/bin/nvram get model)"
-    MESSAGE="$(/bin/nvram get ecrs_backup_usb_text)"
-    LANIP="$(/bin/nvram get lan_ipaddr)"
+    URL="$(/usr/sbin/nvram get ecrs_backup_usb_notifyurl)"
+    SERIAL="$(/usr/sbin/nvram get ecrs_router_serial)"
+    NAME="$(/usr/sbin/nvram get ecrs_myecrs_account_name)"
+    ID="$(/usr/sbin/nvram get ecrs_myecrs_account_id)"
+    MODEL="$(/usr/sbin/nvram get model)"
+    MESSAGE="$(/usr/sbin/nvram get ecrs_backup_usb_text)"
+    LANIP="$(/usr/sbin/nvram get lan_ipaddr)"
 
     /usr/bin/logger -t "USB BACKUP" "Data being sent: SERIAL=${SERIAL} | NAME=${NAME} | ID=${ID} | MODEL=${MODEL} | MESSAGE=${MESSAGE} | IP=${LANIP}"
 
@@ -89,14 +89,14 @@ notify()
 
 
 # Only perform the usb backup steps if it is enabled
-USBBACKUPENABLED=$(/bin/nvram get ecrs_backup_usb_enable)
+USBBACKUPENABLED=$(/usr/sbin/nvram get ecrs_backup_usb_enable)
 if [ "$USBBACKUPENABLED" -eq "1" ]
 then
     /usr/bin/logger -t "USB BACKUP" "Starting USB backup"
 
     # Check if backup has failed for more than 7 days
-    FAILCOUNT=$(/bin/nvram get ecrs_backup_usb_failcount)
-    NOTIFYCOUNT=$(/bin/nvram get ecrs_backup_usb_notifycount)
+    FAILCOUNT=$(/usr/sbin/nvram get ecrs_backup_usb_failcount)
+    NOTIFYCOUNT=$(/usr/sbin/nvram get ecrs_backup_usb_notifycount)
     if [ "$FAILCOUNT" -ge "7" ]
     then
         # If 7 days have passed since the last time the notification was sent
@@ -104,7 +104,7 @@ then
         then
             notify
             NOTIFYCOUNT=$((NOTIFYCOUNT+1))
-            /bin/nvram set ecrs_backup_usb_notifycount=$NOTIFYCOUNT
+            /usr/sbin/nvram set ecrs_backup_usb_notifycount=$NOTIFYCOUNT
         fi
     fi
     

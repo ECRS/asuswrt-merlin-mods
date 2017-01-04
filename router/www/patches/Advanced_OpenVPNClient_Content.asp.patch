@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_OpenVPNClient_Content.asp	2017-01-03 15:41:07.558608576 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_OpenVPNClient_Content.asp	2017-01-03 12:15:51.642608744 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_OpenVPNClient_Content.asp	2017-01-04 10:23:52.527036015 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_OpenVPNClient_Content.asp	2017-01-04 10:18:24.631509220 -0500
 @@ -1205,6 +1205,14 @@
  							<input type="text" maxlength="15" class="input_15_table" name="vpn_client_nm" onkeypress="return validator.isIPAddr(this, event);" value="<% nvram_get("vpn_client_nm"); %>">
  						</td>
