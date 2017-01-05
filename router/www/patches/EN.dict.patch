@@ -1,4 +1,4 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/EN.dict	2017-01-04 10:23:52.527036015 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/EN.dict	2017-01-05 10:56:44.070025780 -0500
 +++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/EN.dict	2017-01-04 10:18:24.631509220 -0500
 @@ -2531,3 +2531,4 @@
  Facebook_WiFi_unit_hint1=All 5 GHz guest networks are used, if you want to use 5 GHz band for Facebook Wi-Fi, please remove one 5 GHz guest network<br>
