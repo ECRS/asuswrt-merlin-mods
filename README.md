@@ -1,3 +1,57 @@
+## Steps taken to get environment setup (Ubuntu 16.04):
+1. Install packages:
+    apt-get install autoconf automake bash bison bzip2 diffutils file flex m4 g++ gawk groff-base libncurses-dev libtool libslang2 make patch perl pkg-config shtool subversion tar texinfo zlib1g zlib1g-dev git-core gettext libexpat1-dev libssl-dev cvs gperf unzip python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++ g++-multilib gitk libncurses5 mtd-utils libncurses5-dev libstdc++6-4.7-dev libvorbis-dev git autopoint autogen sed build-essential intltool libelf1:i386 libglib2.0-dev lib32z1-dev lib32stdc++6
+    
+2. Remove packages:
+    sudo apt-get remove automake
+
+3. Install automake1.11
+    wget http://mirrors.kernel.org/ubuntu/pool/universe/a/automake1.11/automake1.11_1.11.6-3_all.deb
+    sudo dpkg -i automake1.11_1.11.6-3_all.deb
+
+4. Checkout:
+    cd ~
+    git clone https://github.com/RMerl/asuswrt-merlin.git
+    mkdir ~/asuswrt-merlin/release/ecrs
+    cd ~/asuswrt-merlin/release/ecrs
+    git clone https://github.com/ECRS/asuswrt-merlin-mods.git .
+
+5. Symlink build tools
+    sudo ln -s ~/asuswrt-merlin/tools/brcm /opt/brcm
+    sudo ln -s ~/asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
+
+6. Add to ~/.bashrc
+    export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
+
+7. Encoutered error when building:
+    cd libxml2 && \
+    CC=mipsel-uclibc-gcc AR=mipsel-uclibc-ar RANLIB=mipsel-uclibc-ranlib LD=mipsel-uclibc-ld CFLAGS="-Os -Wall -DLINUX26 -DCONFIG_BCMWL5 -DDEBUG_NOISY -DDEBUG_RCTEST -pipe -DBCMWPA2 -funit-at-a-time -Wno-pointer-sign -mtune=mips32r2 -mips32r2 -DRTCONFIG_NVRAM_64K  -DLINUX_KERNEL_VERSION=132630 " LDFLAGS=-ldl \
+    ././configure --host=mipsel-linux --build= --prefix=/usr --without-python --disable-dependency-tracking
+    configure: WARNING: unrecognized options: --disable-dependency-tracking
+    ././configure: line 2256: syntax error near unexpected token `config.h'
+    ././configure: line 2256: `AM_CONFIG_HEADER(config.h)'
+    Makefile:3599: recipe for target 'libxml2/stamp-h1' failed
+
+    FIXED BY: (https://bbs.archlinux.org/viewtopic.php?id=161452)
+        cd /home/asus/asuswrt-merlin/release/src/router/libxml2
+        libtoolize --force
+        aclocal
+        autoheader
+        automake --force-missing --add-missing
+        autoconf
+
+8. Encoutered error when building RT-AC68U:
+    checking for intltool >= 0.35.0... ./configure: line 18759: intltool-update: command not found
+     found
+    configure: error: Your intltool is too old.  You need intltool 0.35.0 or later.
+    Makefile:4061: recipe for target 'avahi-0.6.31-configure' failed
+    make[4]: *** [avahi-0.6.31-configure] Error 1
+    make[4]: Leaving directory '/home/asus/asuswrt-merlin/release/src/router'
+    Makefile:4058: recipe for target 'avahi-0.6.31/Makefile' failed
+    
+    FIXED BY: (https://ubuntuforums.org/showthread.php?t=1080147&p=8334230#post8334230)
+        sudo apt-get install intltool
+
 ## Steps taken to get environment setup (Linux Mint 13):
 
 1. sudo apt-get install bison flex g++ g++-4.4 g++-multilib gawk gcc-multilib gconf-editor gitk lib32z1-dev libncurses5 libncurses5-dev libstdc++6-4.4-dev libtool m4 pkg-config zlib1g-dev gperf lib32z1-dev libelf1:i386
