@@ -1,4 +1,4 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_NATPassThrough_Content.asp	2017-01-05 10:56:44.050025303 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_NATPassThrough_Content.asp	2017-01-05 15:33:37.033456407 -0500
 +++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_NATPassThrough_Content.asp	2017-01-04 10:18:24.631509220 -0500
 @@ -118,17 +118,6 @@
  						</tr>

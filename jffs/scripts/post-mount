@@ -20,18 +20,18 @@ then
 
     # If drive was in a missing state then set it to PENDING
     # if no backup created in two days, otherwise set to SUCCESS
-    if [ "$(/usr/sbin/nvram get ecrs_backup_usb_status)" -eq "2" ]
+    if [ "$(nvram get ecrs_backup_usb_status)" -eq "2" ]
     then
         if [ "$(/usr/bin/find /tmp/mnt/ASUS/archive/* -mtime -2 | /usr/bin/wc -l)" -gt "1" ]
         then
-            /usr/sbin/nvram set ecrs_backup_usb_status=0
-            /usr/sbin/nvram set ecrs_backup_usb_text=""
+            nvram set ecrs_backup_usb_status=0
+            nvram set ecrs_backup_usb_text=""
         else
-            /usr/sbin/nvram set ecrs_backup_usb_status=-1
-            /usr/sbin/nvram set ecrs_backup_usb_text=""
+            nvram set ecrs_backup_usb_status=-1
+            nvram set ecrs_backup_usb_text=""
         fi
 
-        /usr/sbin/nvram commit
+        nvram commit
     fi
 
 
