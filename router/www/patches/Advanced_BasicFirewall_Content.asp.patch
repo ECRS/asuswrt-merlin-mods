@@ -1,4 +1,4 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_BasicFirewall_Content.asp	2017-01-06 10:11:40.244000000 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_BasicFirewall_Content.asp	2017-01-27 14:13:23.010289871 -0500
 +++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_BasicFirewall_Content.asp	2017-01-04 10:18:24.631509220 -0500
 @@ -24,6 +24,7 @@
  	if(WebDav_support){

@@ -1,4 +1,4 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/state.js	2017-01-06 10:11:40.336000000 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/state.js	2017-01-27 14:13:23.114292446 -0500
 +++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/state.js	2017-01-04 10:18:24.635509454 -0500
 @@ -314,7 +314,7 @@
  var dualWAN_support = isSupport("dualwan");
