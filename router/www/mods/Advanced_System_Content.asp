@@ -131,19 +131,21 @@ function initial(){
 		document.form.telnetd_enable[1].disabled = false;
 	}
 
-	if (document.form.ecrs_myecrs_account_id.value != '')
+	var myecrsAccountId = document.form.ecrs_myecrs_account_id;
+	var myecrsAccountName = document.form.ecrs_myecrs_account_name;
+	var routerSerial = document.form.ecrs_router_serial;
+	if (typeof(myecrsAccountId) != 'undefined' && myecrsAccountId.value != '')
 	{
-		document.form.ecrs_myecrs_account_id.outerHTML = '<div>' + document.form.ecrs_myecrs_account_id.value + '</div>';
+		myecrsAccountId.outerHTML = '<div>' + myecrsAccountId.value + '</div>';
 	}
-        if (document.form.ecrs_myecrs_account_name.value != '')
+        if (typeof(myecrsAccountName) != 'undefined' && myecrsAccountName.value != '')
         {
-                document.form.ecrs_myecrs_account_name.outerHTML = '<div>' + document.form.ecrs_myecrs_account_name.value + '</div>';
+                myecrsAccountName.outerHTML = '<div>' + myecrsAccountName.value + '</div>';
         }
-        if (document.form.ecrs_router_serial.value != '')
+        if (typeof(routerSerial) != 'undefined' && routerSerial.value != '')
         {
-                document.form.ecrs_router_serial.outerHTML = '<div style="font-family: &quot;Courier New&quot;, Courier, monospace;">' + document.form.ecrs_router_serial.value + '</div>';
+                routerSerial.outerHTML = '<div style="font-family: &quot;Courier New&quot;, Courier, monospace;">' + routerSerial.value + '</div>';
         }
-
 }
 
 var time_zone_tmp="";

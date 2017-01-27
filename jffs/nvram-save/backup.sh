@@ -66,7 +66,7 @@ notify()
     SERIAL="$(nvram get ecrs_router_serial)"
     NAME="$(nvram get ecrs_myecrs_account_name)"
     ID="$(nvram get ecrs_myecrs_account_id)"
-    MODEL="$(nvram get model)"
+    MODEL="$(nvram get wps_modelnum)"
     MESSAGE="$(nvram get ecrs_backup_usb_text)"
     LANIP="$(nvram get lan_ipaddr)"
 
