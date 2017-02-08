@@ -163,7 +163,7 @@ helpcontent[11] = new Array("",
 							"This feature allows browser to redirect to failed connection warning page when Internet is down, if disabled warning page would not appear.",	/* untranslated */
 							"To set your clock forward one hour in the spring when DST (Daylight Saving Time) starts",	/* untranslated */
 							"To set your clock back one hour in the fall when DST (Daylight Saving Time) ends"	/* untranslated */
-+							, "<#ECRS_Backup_USB_itemdesc#>"
+							, "<#ECRS_Backup_USB_itemdesc#>"
 		);
 //Log
 helpcontent[12] = new Array("",
