@@ -1,4 +1,4 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/help_content.js	2017-02-02 14:25:06.815148825 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/help_content.js	2017-02-21 06:42:48.745970980 -0500
 +++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/help_content.js	2017-02-02 14:24:24.688241537 -0500
 @@ -163,6 +163,7 @@
  							"This feature allows browser to redirect to failed connection warning page when Internet is down, if disabled warning page would not appear.",	/* untranslated */

@@ -1,4 +1,4 @@
---- /home/asus/asuswrt-merlin/release/src/router/rc/jffs2.c	2017-02-02 14:25:07.895143622 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/rc/jffs2.c	2017-02-21 06:42:49.850004155 -0500
 +++ /home/asus/asuswrt-merlin/release/ecrs/router/rc/mods/jffs2.c	2017-01-04 10:18:24.631509220 -0500
 @@ -316,6 +316,23 @@
  
