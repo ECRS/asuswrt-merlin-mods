@@ -131,21 +131,44 @@ function initial(){
 		document.form.telnetd_enable[1].disabled = false;
 	}
 
-	var myecrsAccountId = document.form.ecrs_myecrs_account_id;
-	var myecrsAccountName = document.form.ecrs_myecrs_account_name;
-	var routerSerial = document.form.ecrs_router_serial;
-	if (typeof(myecrsAccountId) != 'undefined' && myecrsAccountId.value != '')
+	toggleEditRouterInfo(0);
+}
+
+function toggleEditRouterInfo(val)
+{
+	var myecrsAccountId = document.getElementById('ecrs_myecrs_account_id');
+	var myecrsAccountName = document.getElementById('ecrs_myecrs_account_name');
+	var routerSerial = document.getElementById('ecrs_router_serial');
+
+	if (parseInt(val))
 	{
-		myecrsAccountId.outerHTML = '<div>' + myecrsAccountId.value + '</div>';
+//		myecrsAccountId.removeAttribute("disabled");
+		inputCtrl(myecrsAccountId, 1);
+//                myecrsAccountName.removeAttribute("disabled");
+		inputCtrl(myecrsAccountName, 1);
+//                routerSerial.removeAttribute("disabled");
+		inputCtrl(routerSerial, 1);
 	}
-        if (typeof(myecrsAccountName) != 'undefined' && myecrsAccountName.value != '')
-        {
-                myecrsAccountName.outerHTML = '<div>' + myecrsAccountName.value + '</div>';
-        }
-        if (typeof(routerSerial) != 'undefined' && routerSerial.value != '')
-        {
-                routerSerial.outerHTML = '<div style="font-family: &quot;Courier New&quot;, Courier, monospace;">' + routerSerial.value + '</div>';
-        }
+	else
+	{
+	        if (typeof(myecrsAccountId) != 'undefined' && myecrsAccountId.value != '')
+	        {
+//	                myecrsAccountId.setAttribute("disabled", "true");
+			inputCtrl(myecrsAccountId, 0);
+	        }
+
+	        if (typeof(myecrsAccountName) != 'undefined' && myecrsAccountName.value != '')
+	        {
+//	                myecrsAccountName.setAttribute("disabled", "true");
+			inputCtrl(myecrsAccountName, 0);
+	        }
+
+	        if (typeof(routerSerial) != 'undefined' && routerSerial.value != '')
+	        {
+//	                routerSerial.setAttribute("disabled", "true");
+			inputCtrl(routerSerial, 0);
+	        }
+	}
 }
 
 var time_zone_tmp="";
@@ -359,106 +382,106 @@ function corrected_timezone(){
 		return;	
 }
 
-var timezones = [
-	["UTC12",	"(GMT-12:00) <#TZ01#>"],
-	["UTC11",	"(GMT-11:00) <#TZ02#>"],
-	["UTC10",	"(GMT-10:00) <#TZ03#>"],
-	["NAST9DST",	"(GMT-09:00) <#TZ04#>"],
-	["PST8DST",	"(GMT-08:00) <#TZ05#>"],
-	["MST7DST_1",	"(GMT-07:00) <#TZ06#>"],
-	["MST7_2",	"(GMT-07:00) <#TZ07#>"],
-	["MST7DST_3",	"(GMT-07:00) <#TZ08#>"],
-	["CST6_2",	"(GMT-06:00) <#TZ10#>"],
-	["CST6DST_3",	"(GMT-06:00) <#TZ11#>"],
-	["CST6DST_3_1",	"(GMT-06:00) <#TZ12#>"],
-	["UTC6DST",	"(GMT-06:00) <#TZ13#>"],
-	["EST5DST",	"(GMT-05:00) <#TZ14#>"],
-	["UTC5_1",	"(GMT-05:00) <#TZ15#>"],
-	["UTC5_2",	"(GMT-05:00) <#TZ16#>"],
-	["UTC4.30",	"(GMT-04:30) <#TZ18_1#>"],
-	["AST4DST",	"(GMT-04:00) <#TZ17#>"],
-	["UTC4_1",	"(GMT-04:00) <#TZ18#>"],
-	["NST3.30DST",	"(GMT-03:30) <#TZ20#>"],
-	["EBST3DST_1",	"(GMT-03:00) <#TZ21#>"],
-	["UTC3",	"(GMT-03:00) <#TZ22#>"],
-	["EBST3DST_2",	"(GMT-03:00) <#TZ23#>"],
-    ["UTC3",	"(GMT-03:00) <#TZ19#>"],
-	["NORO2DST",	"(GMT-02:00) <#TZ24#>"],
-	["EUT1DST",	"(GMT-01:00) <#TZ25#>"],
-	["UTC1",	"(GMT-01:00) <#TZ26#>"],
-	["GMT0",	"(GMT) <#TZ27#>"],
-	["GMT0DST_1",	"(GMT) <#TZ27_2#>"],
-	["GMT0DST_2",	"(GMT) <#TZ28#>"],
-	["GMT0_2",	"(GMT) <#TZ28_1#>"],
-	["UTC-1DST_1",	"(GMT+01:00) <#TZ29#>"],
-	["UTC-1DST_1_1","(GMT+01:00) <#TZ30#>"],
-	["UTC-1_2",	"(GMT+01:00) <#TZ31#>"],
-	["UTC-1DST_2",	"(GMT+01:00) <#TZ32#>"],
-	["MET-1DST",	"(GMT+01:00) <#TZ33#>"],
-	["MET-1DST_1",	"(GMT+01:00) <#TZ34#>"],
-	["MEZ-1DST",	"(GMT+01:00) <#TZ35#>"],
-	["MEZ-1DST_1",	"(GMT+01:00) <#TZ36#>"],
-	["UTC-1_3",	"(GMT+01:00) <#TZ37#>"],
-	["UTC-2DST",	"(GMT+02:00) <#TZ38#>"],
-	["UTC-2DST_3",	"(GMT+02:00) <#TZ33_1#>"],
-	["EST-2DST",	"(GMT+02:00) <#TZ39#>"],
-	["UTC-2DST_4",	"(GMT+02:00) <#TZ40#>"],
-	["UTC-2DST_2",	"(GMT+02:00) <#TZ41#>"],
-	["IST-2DST",	"(GMT+02:00) <#TZ42#>"],
-	["EET-2DST",	"(GMT+02:00) <#TZ43_2#>"],
-	["UTC-2_1",	"(GMT+02:00) <#TZ40_2#>"],
-	["SAST-2",	"(GMT+02:00) <#TZ43#>"],
-	["UTC-3_1",	"(GMT+03:00) <#TZ46#>"],
-	["UTC-3_2",	"(GMT+03:00) <#TZ47#>"],
-	["UTC-3_3",	"(GMT+03:00) <#TZ40_1#>"],
-	["UTC-3_4",	"(GMT+03:00) <#TZ44#>"],
-	["UTC-3_5",	"(GMT+03:00) <#TZ45#>"],
-	["IST-3",	"(GMT+03:00) <#TZ48#>"],
-	["UTC-3.30DST",	"(GMT+03:30) <#TZ49#>"],	
-	["UTC-4_1",	"(GMT+04:00) <#TZ50#>"],
-	["UTC-4_5",	"(GMT+04:00) <#TZ50_2#>"],
-	["UTC-4_4",	"(GMT+04:00) <#TZ50_1#>"],
-	["UTC-4DST_2",	"(GMT+04:00) <#TZ51#>"],
-	["UTC-4.30",	"(GMT+04:30) <#TZ52#>"],
-	["UTC-5",	"(GMT+05:00) <#TZ54#>"],
-	["UTC-5_1",	"(GMT+05:00) <#TZ53#>"],
-	["UTC-5.30_2",	"(GMT+05:30) <#TZ55#>"],
-	["UTC-5.30_1",	"(GMT+05:30) <#TZ56#>"],
-	["UTC-5.30",	"(GMT+05:30) <#TZ59#>"],
-	["UTC-5.45",	"(GMT+05:45) <#TZ57#>"],
-	["RFT-6",	"(GMT+06:00) <#TZ60#>"],
-	["UTC-6",	"(GMT+06:00) <#TZ58#>"],
-	["UTC-6_2",	"(GMT+06:00) <#TZ62_1#>"],
-	["UTC-6.30",	"(GMT+06:30) <#TZ61#>"],
-	["UTC-7",	"(GMT+07:00) <#TZ62#>"],
-	["UTC-7_2",	"(GMT+07:00) <#TZ63#>"],
-	["CST-8",	"(GMT+08:00) <#TZ64#>"],
-	["CST-8_1",	"(GMT+08:00) <#TZ65#>"],
-	["SST-8",	"(GMT+08:00) <#TZ66#>"],
-	["CCT-8",	"(GMT+08:00) <#TZ67#>"],
-	["WAS-8",	"(GMT+08:00) <#TZ68#>"],
-	["UTC-8",	"(GMT+08:00) <#TZ69#>"],
-	["UTC-8_1",     "(GMT+08:00) <#TZ70#>"],
-	["UTC-9_1",	"(GMT+09:00) <#TZ70_1#>"],
-	["UTC-9_3",	"(GMT+09:00) <#TZ72#>"],	
-	["JST",		"(GMT+09:00) <#TZ71#>"],
-	["CST-9.30",	"(GMT+09:30) <#TZ73#>"],
-	["UTC-9.30DST",	"(GMT+09:30) <#TZ74#>"],
-	["UTC-10DST_1",	"(GMT+10:00) <#TZ75#>"],
-	["UTC-10_2",	"(GMT+10:00) <#TZ76#>"],
-	["UTC-10_4",	"(GMT+10:00) <#TZ78#>"],
-	["UTC-10_5",	"(GMT+10:00) <#TZ82_1#>"],
-	["TST-10TDT",	"(GMT+10:00) <#TZ77#>"],
-	["UTC-10_5",	"(GMT+10:00) <#TZ79#>"],
-	["UTC-11",	"(GMT+11:00) <#TZ80#>"],
-	["UTC-11_1",	"(GMT+11:00) <#TZ81#>"],
-	["UTC-11_3",	"(GMT+11:00) <#TZ86#>"],
-	["UTC-12",      "(GMT+12:00) <#TZ82#>"],
-	["UTC-12_2",      "(GMT+12:00) <#TZ85#>"],	
-	["NZST-12DST",	"(GMT+12:00) <#TZ83#>"],
-	["UTC-13",	"(GMT+13:00) <#TZ84#>"]];
-
 function load_timezones(){
+var timezones = [
+        ["UTC12",       "(GMT-12:00) <#TZ01#>"],
+        ["UTC11",       "(GMT-11:00) <#TZ02#>"],
+        ["UTC10",       "(GMT-10:00) <#TZ03#>"],
+        ["NAST9DST",    "(GMT-09:00) <#TZ04#>"],
+        ["PST8DST",     "(GMT-08:00) <#TZ05#>"],
+        ["MST7DST_1",   "(GMT-07:00) <#TZ06#>"],
+        ["MST7_2",      "(GMT-07:00) <#TZ07#>"],
+        ["MST7DST_3",   "(GMT-07:00) <#TZ08#>"],
+        ["CST6_2",      "(GMT-06:00) <#TZ10#>"],
+        ["CST6DST_3",   "(GMT-06:00) <#TZ11#>"],
+        ["CST6DST_3_1", "(GMT-06:00) <#TZ12#>"],
+        ["UTC6DST",     "(GMT-06:00) <#TZ13#>"],
+        ["EST5DST",     "(GMT-05:00) <#TZ14#>"],
+        ["UTC5_1",      "(GMT-05:00) <#TZ15#>"],
+        ["UTC5_2",      "(GMT-05:00) <#TZ16#>"],
+        ["UTC4.30",     "(GMT-04:30) <#TZ18_1#>"],
+        ["AST4DST",     "(GMT-04:00) <#TZ17#>"],
+        ["UTC4_1",      "(GMT-04:00) <#TZ18#>"],
+        ["NST3.30DST",  "(GMT-03:30) <#TZ20#>"],
+        ["EBST3DST_1",  "(GMT-03:00) <#TZ21#>"],
+        ["UTC3",        "(GMT-03:00) <#TZ22#>"],
+        ["EBST3DST_2",  "(GMT-03:00) <#TZ23#>"],
+        ["UTC3",    "(GMT-03:00) <#TZ19#>"],
+        ["NORO2DST",    "(GMT-02:00) <#TZ24#>"],
+        ["EUT1DST",     "(GMT-01:00) <#TZ25#>"],
+        ["UTC1",        "(GMT-01:00) <#TZ26#>"],
+        ["GMT0",        "(GMT) <#TZ27#>"],
+        ["GMT0DST_1",   "(GMT) <#TZ27_2#>"],
+        ["GMT0DST_2",   "(GMT) <#TZ28#>"],
+        ["GMT0_2",      "(GMT) <#TZ28_1#>"],
+        ["UTC-1DST_1",  "(GMT+01:00) <#TZ29#>"],
+        ["UTC-1DST_1_1","(GMT+01:00) <#TZ30#>"],
+        ["UTC-1_2",     "(GMT+01:00) <#TZ31#>"],
+        ["UTC-1DST_2",  "(GMT+01:00) <#TZ32#>"],
+        ["MET-1DST",    "(GMT+01:00) <#TZ33#>"],
+        ["MET-1DST_1",  "(GMT+01:00) <#TZ34#>"],
+        ["MEZ-1DST",    "(GMT+01:00) <#TZ35#>"],
+        ["MEZ-1DST_1",  "(GMT+01:00) <#TZ36#>"],
+        ["UTC-1_3",     "(GMT+01:00) <#TZ37#>"],
+        ["UTC-2DST",    "(GMT+02:00) <#TZ38#>"],
+        ["UTC-2DST_3",  "(GMT+02:00) <#TZ33_1#>"],
+        ["EST-2DST",    "(GMT+02:00) <#TZ39#>"],
+        ["UTC-2DST_4",  "(GMT+02:00) <#TZ40#>"],
+        ["UTC-2DST_2",  "(GMT+02:00) <#TZ41#>"],
+        ["IST-2DST",    "(GMT+02:00) <#TZ42#>"],
+        ["EET-2DST",    "(GMT+02:00) <#TZ43_2#>"],
+        ["UTC-2_1",     "(GMT+02:00) <#TZ40_2#>"],
+        ["SAST-2",      "(GMT+02:00) <#TZ43#>"],
+        ["UTC-3_1",     "(GMT+03:00) <#TZ46#>"],
+        ["UTC-3_2",     "(GMT+03:00) <#TZ47#>"],
+        ["UTC-3_3",     "(GMT+03:00) <#TZ40_1#>"],
+        ["UTC-3_4",     "(GMT+03:00) <#TZ44#>"],
+        ["UTC-3_5",     "(GMT+03:00) <#TZ45#>"],
+        ["IST-3",       "(GMT+03:00) <#TZ48#>"],
+        ["UTC-3.30DST", "(GMT+03:30) <#TZ49#>"],
+        ["UTC-4_1",     "(GMT+04:00) <#TZ50#>"],
+        ["UTC-4_5",     "(GMT+04:00) <#TZ50_2#>"],
+        ["UTC-4_4",     "(GMT+04:00) <#TZ50_1#>"],
+        ["UTC-4DST_2",  "(GMT+04:00) <#TZ51#>"],
+        ["UTC-4.30",    "(GMT+04:30) <#TZ52#>"],
+        ["UTC-5",       "(GMT+05:00) <#TZ54#>"],
+        ["UTC-5_1",     "(GMT+05:00) <#TZ53#>"],
+        ["UTC-5.30_2",  "(GMT+05:30) <#TZ55#>"],
+        ["UTC-5.30_1",  "(GMT+05:30) <#TZ56#>"],
+        ["UTC-5.30",    "(GMT+05:30) <#TZ59#>"],
+        ["UTC-5.45",    "(GMT+05:45) <#TZ57#>"],
+        ["RFT-6",       "(GMT+06:00) <#TZ60#>"],
+        ["UTC-6",       "(GMT+06:00) <#TZ58#>"],
+        ["UTC-6_2",     "(GMT+06:00) <#TZ62_1#>"],
+        ["UTC-6.30",    "(GMT+06:30) <#TZ61#>"],
+        ["UTC-7",       "(GMT+07:00) <#TZ62#>"],
+        ["UTC-7_2",     "(GMT+07:00) <#TZ63#>"],
+        ["CST-8",       "(GMT+08:00) <#TZ64#>"],
+        ["CST-8_1",     "(GMT+08:00) <#TZ65#>"],
+        ["SST-8",       "(GMT+08:00) <#TZ66#>"],
+        ["CCT-8",       "(GMT+08:00) <#TZ67#>"],
+        ["WAS-8",       "(GMT+08:00) <#TZ68#>"],
+        ["UTC-8",       "(GMT+08:00) <#TZ69#>"],
+        ["UTC-8_1",     "(GMT+08:00) <#TZ70#>"],
+        ["UTC-9_1",     "(GMT+09:00) <#TZ70_1#>"],
+        ["UTC-9_3",     "(GMT+09:00) <#TZ72#>"],
+        ["JST",         "(GMT+09:00) <#TZ71#>"],
+        ["CST-9.30",    "(GMT+09:30) <#TZ73#>"],
+        ["UTC-9.30DST", "(GMT+09:30) <#TZ74#>"],
+        ["UTC-10DST_1", "(GMT+10:00) <#TZ75#>"],
+        ["UTC-10_2",    "(GMT+10:00) <#TZ76#>"],
+        ["UTC-10_4",    "(GMT+10:00) <#TZ78#>"],
+        ["UTC-10_5",    "(GMT+10:00) <#TZ82_1#>"],
+        ["TST-10TDT",   "(GMT+10:00) <#TZ77#>"],
+        ["UTC-10_5",    "(GMT+10:00) <#TZ79#>"],
+        ["UTC-11",      "(GMT+11:00) <#TZ80#>"],
+        ["UTC-11_1",    "(GMT+11:00) <#TZ81#>"],
+        ["UTC-11_3",    "(GMT+11:00) <#TZ86#>"],
+        ["UTC-12",      "(GMT+12:00) <#TZ82#>"],
+        ["UTC-12_2",      "(GMT+12:00) <#TZ85#>"],
+        ["NZST-12DST",  "(GMT+12:00) <#TZ83#>"],
+        ["UTC-13",      "(GMT+13:00) <#TZ84#>"]];
+
 	free_options(document.form.time_zone_select);
 	for(var i = 0; i < timezones.length; i++){
 		add_option(document.form.time_zone_select,
@@ -793,22 +816,35 @@ function paste_password(){
 					</tr>
 				</thead>
 				<tbody>
+					<tr id="ecrs_edit_router_info_tr">
+                                                <th width="40%"><a class="hintstyle" href="javascript:void(0);" onClick="openHint(11,10)">Edit ECRS Router Information</a></th>
+                                                <td>
+                                                        <input id="ecrs_edit_router_info_y" type="radio" name="ecrs_edit_router_info" onclick="toggleEditRouterInfo(this.value);" value="1"><#checkbox_Yes#>
+                                                        <input id="ecrs_edit_router_info_n" type="radio" name="ecrs_edit_router_info" onclick="toggleEditRouterInfo(this.value);" value="0" checked><#checkbox_No#>
+                                                </td>
+					</tr>
 					<tr>
 						<th width="40%">myECRS Account ID</th>
 						<td>
-							<div><input id="ecrs_myecrs_account_id" name="ecrs_myecrs_account_id" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_myecrs_account_id"); %>"></div>
+							<div>
+								<input id="ecrs_myecrs_account_id" name="ecrs_myecrs_account_id" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_myecrs_account_id"); %>">
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<th width="40%">myECRS Account Name</th>
 						<td>
-                                                        <div><input id="ecrs_myecrs_account_name" name="ecrs_myecrs_account_name" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" value="<% nvram_get("ecrs_myecrs_account_name"); %>"></div>
+                                                        <div>
+								<input id="ecrs_myecrs_account_name" name="ecrs_myecrs_account_name" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" value="<% nvram_get("ecrs_myecrs_account_name"); %>">
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<th width="40%">Router Serial Number</th>
 						<td>
-                                                        <div><input id="ecrs_router_serial" name="ecrs_router_serial" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_router_serial"); %>"></div>
+                                                        <div>
+								<input id="ecrs_router_serial" name="ecrs_router_serial" class="input_18_table" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-transform:uppercase;" value="<% nvram_get("ecrs_router_serial"); %>">
+							</div>
 						</td>
 					</tr>
 					<tr>

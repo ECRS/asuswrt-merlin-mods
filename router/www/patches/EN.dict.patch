@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/EN.dict	2017-02-21 07:54:41.737560340 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/EN.dict	2017-02-21 06:38:57.549439606 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/EN.dict	2017-02-24 09:14:33.798970774 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/EN.dict	2017-02-22 09:51:54.732871233 -0500
 @@ -135,8 +135,8 @@
  JS_validstr2=This string cannot contain:
  JS_wepkey=Please enter the correct WEP key.
@@ -11,8 +11,9 @@
  LANConfig_ChangedLANIP=The IP address for your router has been changed. Please use the Device Discovery utility to search for your router's new IP address.
  LANHostConfig_display1_sectionname=LAN IP Setting
  LANHostConfig_IPRouters_itemdesc=The LAN IP address of ZVMODELVZ. The default value is 192.168.1.1. In IP-based networks, data packets are sent to the network devices' specific IP addresses.
-@@ -2531,3 +2531,4 @@
+@@ -2531,3 +2531,5 @@
  Facebook_WiFi_unit_hint1=All 5 GHz guest networks are used, if you want to use 5 GHz band for Facebook Wi-Fi, please remove one 5 GHz guest network<br>
  Facebook_WiFi_unit_hint2=All 5 GHz-2 guest networks are used, if you want to use 5 GHz band for Facebook Wi-Fi, please remove one 5 GHz-2 guest network
  Facebook_WiFi_unit_hint_all=All guest networks are used now, please remove at least one guest network then try to enable Facebook Wi-Fi again.
 +ECRS_Backup_USB_itemdesc=External USB medium with volume label 'ASUS' must be plugged into the router in order for USB backup to be enabled.
++ECRS_Edit_Router_Info_itemdesc=Toggle the ability to change ECRS Router Information.

@@ -653,7 +653,6 @@ function show_banner(L3){// L3 = The third Level of Menu
 
 	banner_code +='<div id="banner1" class="banner1" align="center"><img src="images/New_ui/asustitle.png" width="218" height="54" align="left">\n';
 	banner_code +='<div style="margin-top:13px;margin-left:-90px;*margin-top:0px;*margin-left:0px;" align="center"><span id="modelName_top" onclick="this.focus();" class="modelName_top"><#Web_Title2#></span></div>';
-	banner_code +='<div style="margin-left:25px;width:160px;margin-top:5px;float:left;" align="left"><span><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></span></div>';
 
 	// logout, reboot
 	banner_code +='<a href="javascript:logout();"><div style="margin-top:13px;margin-left:25px; *width:136px;" class="titlebtn" align="center"><span><#t1Logout#></span></div></a>\n';
@@ -1741,26 +1740,29 @@ function show_menu(){
 	show_selected_language();
 	autoFocus('<% get_parameter("af"); %>');
 
+        // Add ECRS logo
+        menu1_code += '<div style="margin-top:-170px;"><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></a></div>';
+
 	// QIS wizard
 	if(sw_mode == 2){
 		if(wlc_express == '1'){
-			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_exp2\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+			menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_exp2\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 		}
 		else if(wlc_express == '2'){
-			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_exp5\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+			menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_exp5\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 		}
 		else{
-			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_rep\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+			menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_rep\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 		}
 	}else if(sw_mode == 3){
-		menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=lanip\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n'; 	
+		menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=lanip\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n'; 	
 	}else if(sw_mode == 4){
-		menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_mb\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+		menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\'/'+ QISWIZARD +'?flag=sitesurvey_mb\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 	}else{
 		if(tmo_support && isMobile())
-			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=wireless\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+			menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=wireless\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 		else
-			menu1_code += '<div class="m_qis_r" style="margin-top:-170px;cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=detect\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
+			menu1_code += '<div class="m_qis_r" style="cursor:pointer;" onclick="go_setting(\''+ QISWIZARD +'?flag=detect\');"><table><tr><td><div id="index_img0"></div></td><td><div><#QIS#></div></td></tr></table></div>\n';
 	}
 
 	// ECRS - Backup status
@@ -3220,16 +3222,22 @@ function inputCtrl(obj, flag){
 		if(obj.type != "select-one")
 			obj.style.backgroundColor = "#CCCCCC";
 		if(obj.type == "radio" || obj.type == "checkbox")
-			obj.style.backgroundColor = "#475A5F";
+			obj.style.backgroundColor = "#475A5F";i
 		if(obj.type == "text" || obj.type == "password")
+		{
+	                obj.style.color = "#3A4042";
 			obj.style.backgroundImage = "url(/images/New_ui/inputbg_disable.png)";
+		}
 	}
 	else{
-		obj.disabled = false;		
+		obj.disabled = false;
 		if(obj.type == "radio" || obj.type == "checkbox")
 			obj.style.backgroundColor = "#475A5F";
 		if(obj.type == "text" || obj.type == "password")
+		{
+                	obj.style.color = "#FFFFFF";
 			obj.style.backgroundImage = "url(/images/New_ui/inputbg.png)";
+		}
 	}
 
 	if(current_url.indexOf("Advanced_Wireless_Content") == 0
