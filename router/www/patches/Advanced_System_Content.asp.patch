@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_System_Content.asp	2017-02-25 08:57:42.724124216 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2017-02-25 08:57:35.159948445 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_System_Content.asp	2017-02-25 10:28:06.470559069 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2017-02-25 09:46:41.552751253 -0500
 @@ -31,8 +31,6 @@
          isFromHTTPS = true;
  }

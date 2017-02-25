@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/EN.dict	2017-02-25 08:57:42.728124309 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/EN.dict	2017-02-24 10:12:21.462136787 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/EN.dict	2017-02-25 10:28:06.470559069 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/EN.dict	2017-02-22 09:51:54.732871233 -0500
 @@ -135,8 +135,8 @@
  JS_validstr2=This string cannot contain:
  JS_wepkey=Please enter the correct WEP key.
