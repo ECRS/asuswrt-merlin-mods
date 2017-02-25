@@ -142,31 +142,36 @@ function toggleEditRouterInfo(val)
 
 	if (parseInt(val))
 	{
-//		myecrsAccountId.removeAttribute("disabled");
 		inputCtrl(myecrsAccountId, 1);
-//                myecrsAccountName.removeAttribute("disabled");
+		myecrsAccountId.removeAttribute("readonly");
+
 		inputCtrl(myecrsAccountName, 1);
-//                routerSerial.removeAttribute("disabled");
+		myecrsAccountName.removeAttribute("readonly");
+
 		inputCtrl(routerSerial, 1);
+		routerSerial.removeAttribute("readonly");
 	}
 	else
 	{
 	        if (typeof(myecrsAccountId) != 'undefined' && myecrsAccountId.value != '')
 	        {
-//	                myecrsAccountId.setAttribute("disabled", "true");
 			inputCtrl(myecrsAccountId, 0);
+			myecrsAccountId.removeAttribute("disabled");
+			myecrsAccountId.setAttribute("readonly", "true");
 	        }
 
 	        if (typeof(myecrsAccountName) != 'undefined' && myecrsAccountName.value != '')
 	        {
-//	                myecrsAccountName.setAttribute("disabled", "true");
 			inputCtrl(myecrsAccountName, 0);
+                        myecrsAccountName.removeAttribute("disabled");
+                        myecrsAccountName.setAttribute("readonly", "true");
 	        }
 
 	        if (typeof(routerSerial) != 'undefined' && routerSerial.value != '')
 	        {
-//	                routerSerial.setAttribute("disabled", "true");
 			inputCtrl(routerSerial, 0);
+                        routerSerial.removeAttribute("disabled");
+                        routerSerial.setAttribute("readonly", "true");
 	        }
 	}
 }

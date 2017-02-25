@@ -1,5 +1,5 @@
---- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_System_Content.asp	2017-02-24 09:14:33.798970774 -0500
-+++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2017-02-24 09:12:35.548380664 -0500
+--- /home/asus/asuswrt-merlin/release/src/router/www/Advanced_System_Content.asp	2017-02-25 08:57:42.724124216 -0500
++++ /home/asus/asuswrt-merlin/release/ecrs/router/www/mods/Advanced_System_Content.asp	2017-02-25 08:57:35.159948445 -0500
 @@ -31,8 +31,6 @@
          isFromHTTPS = true;
  }
@@ -64,16 +64,16 @@
  
  	if(tmo_support){
  		document.getElementById("telnet_tr").style.display = "none";
-@@ -164,8 +129,46 @@
+@@ -164,8 +129,51 @@
  		document.getElementById("telnet_tr").style.display = "";
  		document.form.telnetd_enable[0].disabled = false;
  		document.form.telnetd_enable[1].disabled = false;
 -	}	
 +	}
- 
++
 +	toggleEditRouterInfo(0);
 +}
-+
+ 
 +function toggleEditRouterInfo(val)
 +{
 +	var myecrsAccountId = document.getElementById('ecrs_myecrs_account_id');
@@ -82,37 +82,42 @@
 +
 +	if (parseInt(val))
 +	{
-+//		myecrsAccountId.removeAttribute("disabled");
 +		inputCtrl(myecrsAccountId, 1);
-+//                myecrsAccountName.removeAttribute("disabled");
++		myecrsAccountId.removeAttribute("readonly");
++
 +		inputCtrl(myecrsAccountName, 1);
-+//                routerSerial.removeAttribute("disabled");
++		myecrsAccountName.removeAttribute("readonly");
++
 +		inputCtrl(routerSerial, 1);
++		routerSerial.removeAttribute("readonly");
 +	}
 +	else
 +	{
 +	        if (typeof(myecrsAccountId) != 'undefined' && myecrsAccountId.value != '')
 +	        {
-+//	                myecrsAccountId.setAttribute("disabled", "true");
 +			inputCtrl(myecrsAccountId, 0);
++			myecrsAccountId.removeAttribute("disabled");
++			myecrsAccountId.setAttribute("readonly", "true");
 +	        }
 +
 +	        if (typeof(myecrsAccountName) != 'undefined' && myecrsAccountName.value != '')
 +	        {
-+//	                myecrsAccountName.setAttribute("disabled", "true");
 +			inputCtrl(myecrsAccountName, 0);
++                        myecrsAccountName.removeAttribute("disabled");
++                        myecrsAccountName.setAttribute("readonly", "true");
 +	        }
 +
 +	        if (typeof(routerSerial) != 'undefined' && routerSerial.value != '')
 +	        {
-+//	                routerSerial.setAttribute("disabled", "true");
 +			inputCtrl(routerSerial, 0);
++                        routerSerial.removeAttribute("disabled");
++                        routerSerial.setAttribute("readonly", "true");
 +	        }
 +	}
  }
  
  var time_zone_tmp="";
-@@ -175,32 +178,6 @@
+@@ -175,32 +183,6 @@
  
  function applyRule(){
  	if(validForm()){
@@ -145,7 +150,7 @@
  		if(document.form.http_passwd2.value.length > 0){
  			document.form.http_passwd.value = document.form.http_passwd2.value;
  			document.form.http_passwd.disabled = false;
-@@ -218,52 +195,6 @@
+@@ -218,52 +200,6 @@
  				document.form.time_zone.value = document.form.time_zone_select.value;
  		}
  		
@@ -198,7 +203,7 @@
  		if(document.form.btn_ez_radiotoggle[1].disabled == false && document.form.btn_ez_radiotoggle[1].checked == true){
  				document.form.btn_ez_radiotoggle.value=1;
  				document.form.btn_ez_mode.value=0;				
-@@ -281,6 +212,9 @@
+@@ -281,6 +217,9 @@
  			updateDateTime();
  		}
  
@@ -208,7 +213,7 @@
  		showLoading();
  		document.form.submit();
  	}
-@@ -403,56 +337,6 @@
+@@ -403,56 +342,6 @@
  
  	/*if (!validator.range(document.form.http_lanport, 1, 65535))
  		return false;*/
@@ -265,7 +270,7 @@
  
  	if(reboot_schedule_support){		
  		if(!document.form.reboot_date_x_Sun.checked && !document.form.reboot_date_x_Mon.checked &&
-@@ -498,106 +382,106 @@
+@@ -498,106 +387,106 @@
  		return;	
  }
  
@@ -470,7 +475,7 @@
  	free_options(document.form.time_zone_select);
  	for(var i = 0; i < timezones.length; i++){
  		add_option(document.form.time_zone_select,
-@@ -750,50 +634,6 @@
+@@ -750,50 +639,6 @@
  	}	
  }
  
@@ -521,7 +526,7 @@
  function check_Timefield_checkbox(){	// To check Date checkbox checked or not and control Time field disabled or not
  	if( document.form.reboot_date_x_Sun.checked == true 
  		|| document.form.reboot_date_x_Mon.checked == true 
-@@ -814,106 +654,11 @@
+@@ -814,106 +659,11 @@
  	}		
  }
  
@@ -628,7 +633,7 @@
  /* password item show or not */
  function pass_checked(obj){
  	switchType(obj, document.form.show_pass_1.checked, true);
-@@ -943,21 +688,6 @@
+@@ -943,21 +693,6 @@
  		document.getElementById("scorebarBorder").style.display = "none";
  }
  
@@ -650,7 +655,7 @@
  /*function sshd_remote_access(obj_value){
  	if(obj_value == 1){
  		document.getElementById('remote_access_port_tr').style.display = "";
-@@ -977,19 +707,6 @@
+@@ -977,19 +712,6 @@
  
  }*/
  
@@ -670,7 +675,7 @@
  function hide_reboot_option(flag){
  	document.getElementById("reboot_schedule_date_tr").style.display = (flag == 1) ? "" : "none";
  	document.getElementById("reboot_schedule_time_tr").style.display = (flag == 1) ? "" : "none";
-@@ -1063,7 +780,6 @@
+@@ -1063,7 +785,6 @@
  <input type="hidden" name="time_zone" value="<% nvram_get("time_zone"); %>">
  <input type="hidden" name="time_zone_dstoff" value="<% nvram_get("time_zone_dstoff"); %>">
  <input type="hidden" name="http_passwd" value="" disabled>
@@ -678,7 +683,7 @@
  <input type="hidden" name="btn_ez_mode" value="<% nvram_get("btn_ez_mode"); %>">
  <input type="hidden" name="reboot_schedule" value="<% nvram_get_x("","reboot_schedule"); %>" disabled>
  <input type="hidden" name="reboot_schedule_enable" value="<% nvram_get_x("","reboot_schedule_enable"); %>">
-@@ -1093,7 +809,71 @@
+@@ -1093,7 +814,71 @@
  			<div style="margin-left:5px;margin-top:10px;margin-bottom:10px"><img src="/images/New_ui/export/line_export.png"></div>
  			<div class="formfontdesc"><#Syste_title#></div>
  
@@ -751,7 +756,7 @@
  			<thead>
  				<tr>
  					<td colspan="2"><#PASS_changepasswd#></td>
-@@ -1127,82 +907,6 @@
+@@ -1127,82 +912,6 @@
  					</td>
  				</tr>
  			</table>
@@ -834,7 +839,7 @@
  	
  			<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3"  class="FormTable" style="margin-top:8px;">
  				<thead>
-@@ -1337,108 +1041,6 @@
+@@ -1337,108 +1046,6 @@
  					</td>
  				</tr>
  			</table>
