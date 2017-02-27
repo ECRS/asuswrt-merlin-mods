@@ -1741,7 +1741,7 @@ function show_menu(){
 	autoFocus('<% get_parameter("af"); %>');
 
         // Add ECRS logo
-        menu1_code += '<div style="margin-top:-170px;width:190px;"><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0;"></a></div>';
+        menu1_code += '<div style="margin-top:-170px;width:190px;"><a href="https://ecrs.com" target="_blank"><img src="images/ecrs_asuswrt.svg" style="border: 0; width: 190px; height: 57px;"></a></div>';
 
 	// QIS wizard
 	if(sw_mode == 2){
